@@ -12,6 +12,7 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
     this.auto_renew = auto_renew;
     this.customHtml = customHtml;
     this.type = type;
+    
 
 
     if (starting_price_duration == 0) {
