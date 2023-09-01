@@ -49,9 +49,10 @@
         /**
          * Fonction qui permet de savoir si c'est une offre life
          **/
-        Choice.prototype.isLife = function () {
-            if (this.starting_price > 500 && this.starting_price_duration == 12 && this.renewal_term_length == 12 &&
-                (this.default_price == 99 || this.default_price == 19) && this.auto_renew == 1) {
+         Choice.prototype.isLife = function () {
+            if ((this.starting_price > 500 && this.default_price == 99 || this.starting_price > 300 && this
+                    .default_price == 19) && this.starting_price_duration == 12 && this.renewal_term_length == 12 &&
+                this.auto_renew == 1) {
                 return true;
             } else {
                 return false;
@@ -431,7 +432,7 @@
   
         choices.forEach((choice, index) => {
   
-            VANGUARD_LOCAL_CONFIG.choices[index].className = choices.length <= 2 ? "my-1 col-md-6 col-12 mb-6" :
+            VANGUARD_LOCAL_CONFIG.choices[index].className = choices.length <= 2 || choices.length >= 4 ? "my-1 col-md-6 col-12 mb-6" :
                 "my-1 col-md col-12 mb-6";
             // Trouver l'élément avec l'ID "vanguard-choice-[choice.id]"
             const element = $('#vanguard-choice-' + choice.id);
