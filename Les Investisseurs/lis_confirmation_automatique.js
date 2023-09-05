@@ -12,7 +12,6 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
     this.auto_renew = auto_renew;
     this.customHtml = customHtml;
     this.type = type;
-    
 
 
     if (starting_price_duration == 0) {
@@ -127,7 +126,7 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
             return `<div class="w-100 mt-3 no-extrasell btn text-center" style="background-color: red; color: white;">Non merci.</div>`
         } else {
             return `<span class="btn btn-primary ` + this.classNameIdentifier +
-                `" style="width: 100%;text-transform: uppercase;background-color:green;">Je profite d'une offre ` +
+                `" style="width: 100%;text-transform: uppercase;background-color:green;border:none;">Je profite d'une offre ` +
                 this.startDuration(1) + ` en 1 clic </span>`
         }
     }
@@ -197,6 +196,9 @@ function convertToDuration(number, genre = 0) {
             break;
         case 24:
             genre == 0 ? duration = 'biennal' : duration = 'biennalle';
+            break;
+        case 36:
+            genre == 0 ? duration = 'de 3 ans' : duration = 'de 3 ans';
             break;
         default:
             duration = 'durée inconnue';
@@ -329,5 +331,4 @@ document.addEventListener("vanguard-ready", function () {
         // Modifier le contenu texte avec la valeur "config.publication"
         $(this).text(choices[0].starting_price_duration);
     });
-
 });
