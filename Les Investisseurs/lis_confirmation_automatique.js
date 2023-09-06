@@ -113,12 +113,21 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
             return `<div class="w-100 mt-3 no-extrasell btn text-center" style="background-color: red; color: white;">Non merci.</div><hr>`
         } else {
             return `<div class="text-center mt-3 font-weight-bold">
-                          <h3 class="text-uppercase"><strong>OFFRE ` + this.startDuration(1) + ` : <em>` + this
+                            <h3 class="text-uppercase"><strong>OFFRE ` + this.startDuration(1) + ` : <em>` + this
                 .productName + `</em></strong></h3>
-                          ` + this.printAlert() + this.printButton() + this.printPaiement() +
+                            ` + this.printAlert() + this.printButton() + this.printPaiement() +
                 `</div><hr>`
         }
     }
+
+    /**
+     * Fonction qui retourne le prix du choice en fonction de la durée en mois en commentaire
+     **/
+    Choice.prototype.calculPriceDuration = function (duration = 1) {
+        return (this.starting_price + (Math.ceil((duration - this.starting_price_duration) /
+                this.renewal_term_length) *
+            this.default_price))
+    };
 
     Choice.prototype.printButton = function () {
         var textButton;
@@ -255,7 +264,8 @@ document.addEventListener("vanguard-ready", function () {
 
     let previous_choice = JSON.parse(localStorage.PREVIOUS_CHOICE);
     previous_choice = new Choice(previous_choice.choiceId, null, previous_choice.productName, -1,
-        previous_choice.stackLetter, previous_choice.paymentMethod, previous_choice.startingPriceDuration,
+        previous_choice.stackLetter, previous_choice.paymentMethod, previous_choice
+        .startingPriceDuration,
         previous_choice
         .renewalTermLength, previous_choice.startingPrice, previous_choice.defaultPrice, previous_choice
         .isBcl, "");
@@ -273,7 +283,7 @@ document.addEventListener("vanguard-ready", function () {
         $(this).text(config_bdc.publication);
     });
 
-    // Parcourir chaque balise "publication"
+    // Parcourir chaque balise "previous_choice_price"
     $("previous_choice_price").each(function () {
         // Modifier le contenu texte avec la valeur "config.publication"
         $(this).text(previous_choice.starting_price.toLocaleString("fr-FR", {
@@ -290,13 +300,25 @@ document.addEventListener("vanguard-ready", function () {
         var tagName = this.tagName;
         // Utilisez une expression régulière pour extraire le nombre entier de la balise
         var number = parseInt(tagName.match(/\d+/)[0], 10);
-        var starting_price_duration = parseInt(previous_choice.starting_price_duration);
-        var starting_price = parseFloat(previous_choice.starting_price);
-        var default_price = parseFloat(previous_choice.default_price);
-        var renewal_term_length = parseFloat(previous_choice.renewal_term_length);
         // Affichez le nombre entier dans la balise elle-même
-        $(this).text((starting_price + (Math.ceil((number - starting_price_duration) / renewal_term_length) *
-            default_price)).toLocaleString("fr-FR", {
+        $(this).text(previous_choice.calculPriceDuration(number).toLocaleString("fr-FR", {
+            style: "currency",
+            currency: "EUR"
+        }));
+        // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
+    });
+
+
+    $('*').filter(function () {
+        // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
+        return this.tagName.match(/^DIFFERENT_PRICE_\d{1,2}$/i);
+    }).each(function () {
+        // Récupérez le nom de la balise (ex. "PREVIOUS_CHOICE_PRICE_1")
+        var tagName = this.tagName;
+        // Utilisez une expression régulière pour extraire le nombre entier de la balise
+        var number = parseInt(tagName.match(/\d+/)[0], 10);
+        // Affichez le nombre entier dans la balise elle-même
+        $(this).text((previous_choice.calculPriceDuration(number) - choices[0].calculPriceDuration(number)).toLocaleString("fr-FR", {
             style: "currency",
             currency: "EUR"
         }));
@@ -331,4 +353,5 @@ document.addEventListener("vanguard-ready", function () {
         // Modifier le contenu texte avec la valeur "config.publication"
         $(this).text(choices[0].starting_price_duration);
     });
+
 });
