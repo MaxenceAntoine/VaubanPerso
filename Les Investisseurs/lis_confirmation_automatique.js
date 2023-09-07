@@ -283,6 +283,12 @@ document.addEventListener("vanguard-ready", function () {
         $(this).text(config_bdc.publication);
     });
 
+    // Parcourir chaque balise "auteur"
+    $("auteur").each(function () {
+        // Modifier le contenu texte avec la valeur "config.auteur"
+        $(this).text(config_bdc.auteur);
+    });
+
     // Parcourir chaque balise "previous_choice_price"
     $("previous_choice_price").each(function () {
         // Modifier le contenu texte avec la valeur "config.publication"
