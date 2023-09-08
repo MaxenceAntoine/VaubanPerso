@@ -46,8 +46,9 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
      * Fonction qui permet de savoir si c'est une offre life
      **/
     Choice.prototype.isLife = function () {
-        if (this.starting_price > 500 && this.starting_price_duration == 12 && this.renewal_term_length == 12 &&
-            (this.default_price == 99 || this.default_price == 19) && this.auto_renew == 1) {
+        if ((this.starting_price > 500 && this.default_price == 99 || this.starting_price > 300 && this
+                .default_price == 19) && this.starting_price_duration == 12 && this.renewal_term_length == 12 &&
+            this.auto_renew == 1) {
             return true;
         } else {
             return false;
@@ -129,6 +130,8 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
             this.default_price))
     };
 
+    
+
     Choice.prototype.printButton = function () {
         var textButton;
         if (this.isNonMerci()) {
@@ -139,6 +142,8 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
                 this.startDuration(1) + ` en 1 clic </span>`
         }
     }
+
+
     Choice.prototype.printPaiement = function () {
         if (this.type == "crosssell") {
             return `<p>Je paie <span style="color: #38761d;">` + this.starting_price.toLocaleString("fr-FR", {
@@ -155,12 +160,7 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
                     style: "currency",
                     currency: "EUR"
                 }) +
-                `</span> tout de suite pour l’abonnement ` + this.startDuration() + ` au lieu de ` +
-                previous_choice.starting_price.toLocaleString("fr-FR", {
-                    style: "currency",
-                    currency: "EUR"
-                }) + ` par ` + convertToDurationBis(previous_choice
-                    .starting_price_duration) + ` d'abonnement</p><p>Ensuite, je ne paie que ` + this
+                `</span> tout de suite pour l’abonnement ` + this.startDuration() + ` au lieu de `+ printPreviousChoice(previous_choice) + ` d'abonnement</p><p>Ensuite, je ne paie que ` + this
                 .default_price.toLocaleString("fr-FR", {
                     style: "currency",
                     currency: "EUR"
@@ -216,6 +216,28 @@ function convertToDuration(number, genre = 0) {
 
     return duration;
 }
+
+/**
+     * Fonction qui retourne le prix du previous choice de façon écrite
+     **/
+function printPreviousChoice(previous_choice){
+    if (previous_choice.isFreeMonth()) {
+        if (previous_choice.starting_price_duration == 1) {
+            return `0&nbsp;€ le premier mois puis ` + previous_choice.default_price.toLocaleString("fr-FR", {
+                style: "currency",
+                currency: "EUR"
+            }) + ` par ` + convertToDurationBis(previous_choice.starting_price_duration)
+        }else{
+            return `0&nbsp;€ les ` + previous_choice.starting_price + ` mois puis ` + previous_choice.default_price + ` par ` + convertToDurationBis(previous_choice.renewal_term_length)
+        }
+    } else {
+        return previous_choice.starting_price.toLocaleString("fr-FR", {
+            style: "currency",
+            currency: "EUR"
+        }) + ` par ` + convertToDurationBis(previous_choice
+            .starting_price_duration)
+    }
+};
 
 function convertToDurationBis(number) {
     let duration;
@@ -293,6 +315,15 @@ document.addEventListener("vanguard-ready", function () {
     $("previous_choice_price").each(function () {
         // Modifier le contenu texte avec la valeur "config.publication"
         $(this).text(previous_choice.starting_price.toLocaleString("fr-FR", {
+            style: "currency",
+            currency: "EUR"
+        }));
+    });
+
+    // Parcourir chaque balise "previous_choice_price"
+    $("previous_default_price").each(function () {
+        // Modifier le contenu texte avec la valeur "config.publication"
+        $(this).text(previous_choice.default_price.toLocaleString("fr-FR", {
             style: "currency",
             currency: "EUR"
         }));
