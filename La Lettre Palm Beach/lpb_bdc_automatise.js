@@ -198,7 +198,10 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             ` avec ` + config_bdc.auteur +
             ` et bénéficie de l’offre exceptionnelle d'abonnement ` + this
             .startDuration() +
-            ` à ` + this.starting_price + `&nbsp;€ par ` + this
+            ` à ` + this.starting_price.toLocaleString("fr-FR", {
+                style: "currency",
+                currency: "EUR"
+              }) + `&nbsp;€ par ` + this
             .printMoyenPaiement() + `.</p>
 
                     <p>Je comprends que cette offre spéciale me permet de bénéficier des analyses uniques de ` +
