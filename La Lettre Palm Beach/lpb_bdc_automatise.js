@@ -201,7 +201,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             ` à ` + this.starting_price.toLocaleString("fr-FR", {
                 style: "currency",
                 currency: "EUR"
-              }) + `&nbsp;€ par ` + this
+              }) + ` par ` + this
             .printMoyenPaiement() + `.</p>
 
                     <p>Je comprends que cette offre spéciale me permet de bénéficier des analyses uniques de ` +
@@ -210,7 +210,10 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
                     </p>
 
                     <p>Le renouvellement est automatique, à la fin de ma période d'abonnement je serai donc débité de ` +
-            this.default_price + `&nbsp;€ par ` + this.printMoyenPaiement() +
+            this.default_price.toLocaleString("fr-FR", {
+                style: "currency",
+                currency: "EUR"
+              }) + ` par ` + this.printMoyenPaiement() +
             ` par ` + convertToDurationBis(this.renewal_term_length) +
             ` et ainsi de suite jusqu'à ce que vous demandiez l'arrêt de l'abonnement.
                     </p>
