@@ -219,7 +219,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             `, des dossiers cadeaux ainsi que de ses alertes mensuelles.
                     </p>
 
-                    <p>Le renouvellement est automatique, à la fin de ma période d'abonnement je serai donc débité de ` +
+                    <p>Le renouvellement est automatique, à la fin de votre période d'abonnement vous serez donc débité de ` +
             this.default_price.toLocaleString("fr-FR", {
                 style: "currency",
                 currency: "EUR"
