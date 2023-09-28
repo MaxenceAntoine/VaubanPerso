@@ -180,15 +180,26 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      * Fonction qui retourne l'affichage de l'ancien prix (rien si pas d'info)
      **/
      Choice.prototype.price = function () {
-        var affichage = "";
-        if (this.isFreeMonth() || this.isTrialMonth()) {
-            affichage = `<span class="price mb-4">`+this.startDuration() + " à "+this.starting_price+"&nbsp;€</span>";
+        var affichage = `<span class="price mb-4">`;
+        if (this.isFreeMonth()) {
+            if (this.starting_price_duration > 1){
+                affichage =+ this.starting_price_duration + " mois gratuits à "+this.starting_price+"&nbsp;€</span>";
+            }else{
+                affichage =+ this.starting_price_duration + " mois gratuit à "+this.starting_price+"&nbsp;€</span>";
+            }
+        }
+        else if(this.isTrialMonth()){
+            if (this.starting_price_duration > 1){
+                affichage =+this.starting_price_duration + " mois d'essais à "+this.starting_price+"&nbsp;€</span>";
+            }else{
+                affichage =+this.starting_price_duration + " mois d'essai à "+this.starting_price+"&nbsp;€</span>";
+            }
         }
         else if(this.old_price == null){
-            affichage = `<span class="price mb-4"><span class="currency" style="color: red;">` + this.starting_price + `&nbsp;€ </span>TTC</span>`;
+            affichage = `<span class="currency" style="color: red;">` + this.starting_price + `&nbsp;€ </span>TTC</span>`;
         }
         else {
-            affichage = `<span class="price mb-4"><span class="currency">` + this.starting_price + `&nbsp;€ </span>TTC</span>`;
+            affichage = `<span class="currency">` + this.starting_price + `&nbsp;€ </span>TTC</span>`;
         }
         return affichage;
     };
