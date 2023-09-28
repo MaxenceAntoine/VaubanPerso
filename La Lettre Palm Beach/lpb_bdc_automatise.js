@@ -489,7 +489,7 @@ function customizeChoices(choices) {
 }
 
 document.addEventListener("vanguard-ready", function () {
-
+    alert("Chargement du script");
     var choices = []; // Crée un tableau vide pour les choices
     window.VANGUARD_LOCAL_CONFIG.choices.forEach(function (choice, index) {
         choices.push(new Choice(choice.id, index + 1, choice.stackLetter, choice.paymentMethod,
@@ -517,8 +517,6 @@ document.addEventListener("vanguard-ready", function () {
                 choiceSelected = choice;
             }
         });
-        console.log(inputId);
-        console.log(choiceSelected);
         changeRecapitulatif(choiceSelected);
     });
 
