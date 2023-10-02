@@ -286,33 +286,33 @@
         }));
         // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
       });
-      // Parcourir chaque balise "publication"
+      // Parcourir chaque balise "previous_choice_duration"
       $("previous_choice_duration").each(function () {
-        // Modifier le contenu texte avec la valeur "config.publication"
+        // Modifier le contenu texte avec la valeur "config.starting_price_duration"
         $(this).text(previous_choice.starting_price_duration);
       });
   
-      // Parcourir chaque balise "publication"
+      // Parcourir chaque balise "publchoice_starting_priceication"
       $("choice_starting_price").each(function () {
-        // Modifier le contenu texte avec la valeur "config.publication"
+        // Modifier le contenu texte avec la valeur "starting_price"
         $(this).text(choices[0].starting_price.toLocaleString("fr-FR", {
           style: "currency",
           currency: "EUR"
         }));
       });
   
-      // Parcourir chaque balise "publication"
+      // Parcourir chaque balise "choice_default_price"
       $("choice_default_price").each(function () {
-        // Modifier le contenu texte avec la valeur "config.publication"
+        // Modifier le contenu texte avec la valeur "default_price"
         $(this).text(choices[0].default_price.toLocaleString("fr-FR", {
           style: "currency",
           currency: "EUR"
         }));
       });
   
-      // Parcourir chaque balise "publication"
+      // Parcourir chaque balise "choice_duration"
       $("choice_duration").each(function () {
-        // Modifier le contenu texte avec la valeur "config.publication"
+        // Modifier le contenu texte avec la valeur "starting_price_duration"
         $(this).text(choices[0].starting_price_duration);
       });
   
