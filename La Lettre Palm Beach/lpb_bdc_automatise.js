@@ -149,7 +149,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         }
 
         if (this.isLife()) {
-            affichage = "Offre à vie"
+            affichage = "<strong style=`color:green;`>Offre à vie</strong>"
         } else if (this.isFreeMonth()) {
             if( this.starting_price_duration > 1){
                 affichage = this.starting_price_duration + " mois gratuits";
@@ -196,7 +196,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             }
         }
         else if(this.old_price == null){
-            affichage = `<span class="currency" style="color: red;">` + this.starting_price + `&nbsp;€ </span>TTC</span>`;
+            affichage = `<span class="currency">` + this.starting_price + `&nbsp;€ </span>TTC</span>`;
         }
         else {
             affichage = `<span class="currency">` + this.starting_price + `&nbsp;€ </span>TTC</span>`;
