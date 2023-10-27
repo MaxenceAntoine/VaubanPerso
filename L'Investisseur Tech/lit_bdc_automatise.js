@@ -140,6 +140,24 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     };
 
     /**
+     * Fonction qui retourne l'affichage du prix du choice'
+     **/
+    Choice.prototype.printPrice = function () {
+        var extention = "<p>&nbsp;</p>";
+
+        if (this.isFreeMonth()) {
+            if(this.starting_price_duration = 1){
+                var extention = "<p>le premier mois</p>";
+            }else{
+                var extention = `<p>les ` + this.starting_price_duration + ` premiers mois</p>`;
+            }
+        }
+        return `<span class="price mb-4"><span class="currency">` + this.starting_price + `&nbsp;€ </span>TTC</span>` + extention;
+    };
+
+    
+
+    /**
      * Fonction qui retourne l'affichage de l'ancien prix (rien si pas d'info)
      **/
     Choice.prototype.printOldPrice = function () {
@@ -440,10 +458,8 @@ function customizeChoices(choices) {
               <div class="generic_price_tag">
                   ` + choice.printOffre() + `
                   </p>
-                  ` + choice.printOldPrice() + `
-                  <span class="price mb-4"><span class="currency">` + choice.starting_price + `&nbsp;€ </span>TTC</span>
-
-                  <br><p style="font-size:12px" class="mt-4 mb-2"">` + choice
+                  ` + choice.printOldPrice() + choice.printPrice() + `
+                  <p style="font-size:12px" class="mt-4 mb-2"">` + choice
             .printRenouvellement() + `<br>Annulable sur simple demande</p>` + choice.printBandeau() + `
 
               </div>
