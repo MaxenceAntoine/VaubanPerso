@@ -104,7 +104,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         if (this.isLife()) {
             return "à vie";
         } else if (this.isFreeMonth()) {
-            return this.starting_price_duration + " mois";
+            return this.renewal_term_length + " mois";
             //return "gratuit";
         } else {
             return convertToDuration(this.starting_price_duration);
@@ -442,7 +442,7 @@ function customizeChoices(choices) {
                   </p>
                   ` + choice.printOldPrice() + `
                   <span class="price mb-4"><span class="currency">` + choice.starting_price + `&nbsp;€ </span>TTC</span>
-                    
+
                   <br><p style="font-size:12px" class="mt-4 mb-2"">` + choice
             .printRenouvellement() + `<br>Annulable sur simple demande</p>` + choice.printBandeau() + `
 
