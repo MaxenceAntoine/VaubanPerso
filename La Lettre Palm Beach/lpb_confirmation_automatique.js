@@ -302,7 +302,7 @@ document.addEventListener("vanguard-ready", function () {
     // Parcourir chaque balise "publication"
     $("publication").each(function () {
         // Modifier le contenu texte avec la valeur "config.publication"
-        $(this).text(config_bdc.publication);
+        $(this).html("<em>"+config_bdc.publication+"</em>");
     });
 
     // Parcourir chaque balise "auteur"
