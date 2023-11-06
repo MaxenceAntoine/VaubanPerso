@@ -329,6 +329,19 @@ document.addEventListener("vanguard-ready", function () {
         }));
     });
 
+
+    // Parcourir chaque balise "publication"
+    $("previous_choice_duration").each(function () {
+        // Modifier le contenu texte avec la valeur "config.publication"
+        $(this).text(previous_choice.starting_price_duration);
+    });
+
+    // Parcourir chaque balise "publication"
+    $("previous_choice_duration_text").each(function () {
+        // Modifier le contenu texte avec la valeur "config.publication"
+        $(this).text(convertToDuration(previous_choice.starting_price_duration));
+    });
+
     $('*').filter(function () {
         // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
         return this.tagName.match(/^PREVIOUS_CHOICE_PRICE_\d{1,2}$/i);
@@ -360,11 +373,6 @@ document.addEventListener("vanguard-ready", function () {
             currency: "EUR"
         }));
         // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
-    });
-    // Parcourir chaque balise "publication"
-    $("previous_choice_duration").each(function () {
-        // Modifier le contenu texte avec la valeur "config.publication"
-        $(this).text(previous_choice.starting_price_duration);
     });
 
     // Parcourir chaque balise "publication"
