@@ -307,7 +307,7 @@ document.addEventListener("vanguard-ready", function () {
     // Parcourir chaque balise "publication"
     $("publication").each(function () {
         // Modifier le contenu texte avec la valeur "config.publication"
-        $(this).text(config_bdc.publication);
+        $(this).html("<em>"+config_bdc.publication+"</em>");
     });
 
     // Parcourir chaque balise "auteur"
@@ -332,6 +332,18 @@ document.addEventListener("vanguard-ready", function () {
             style: "currency",
             currency: "EUR"
         }));
+    });
+
+    // Parcourir chaque balise "publication"
+    $("previous_choice_duration").each(function () {
+        // Modifier le contenu texte avec la valeur "config.publication"
+        $(this).text(previous_choice.starting_price_duration);
+    });
+
+    // Parcourir chaque balise "publication"
+    $("previous_choice_duration_text").each(function () {
+        // Modifier le contenu texte avec la valeur "config.publication"
+        $(this).text(convertToDuration(previous_choice.starting_price_duration));
     });
 
     $('*').filter(function () {
@@ -366,11 +378,7 @@ document.addEventListener("vanguard-ready", function () {
         }));
         // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
     });
-    // Parcourir chaque balise "publication"
-    $("previous_choice_duration").each(function () {
-        // Modifier le contenu texte avec la valeur "config.publication"
-        $(this).text(previous_choice.starting_price_duration);
-    });
+    
 
     // Parcourir chaque balise "publication"
     $("choice_starting_price").each(function () {
