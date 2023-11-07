@@ -87,13 +87,18 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
     /**
      * Fonction qui retourne la durée de renouvellement du choice de base
      **/
-    Choice.prototype.startDuration = function (genre = 0) {
+    Choice.prototype.startDuration = function (genre = 0, option = 0) {
         if (this.isLife()) {
             return "à vie";
         } else if (this.isFreeMonth()) {
-            return convertToDuration(this.renewal_term_length, genre) + ` avec <span style="color:green;"><u>` + this
+            if (option == "green") {
+                return convertToDuration(this.renewal_term_length, genre) + ` avec <span style="color:green;"><u>` + this
                 .starting_price_duration +
                 ` mois gratuit</u></span>`;
+            }
+            return convertToDuration(this.renewal_term_length, genre) + ` avec ` + this
+                .starting_price_duration +
+                ` mois gratuit`;
         } else {
             return convertToDuration(this.starting_price_duration, genre);
         }
@@ -114,7 +119,7 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
             return `<div class="w-100 mt-3 no-extrasell btn text-center" style="background-color: red; color: white;">Non merci.</div><hr>`
         } else {
             return `<div class="text-center mt-3 font-weight-bold">
-                            <h3 class="text-uppercase"><strong>OFFRE ` + this.startDuration(1) + ` : <em>` + this
+                            <h3 class="text-uppercase"><strong>OFFRE ` + this.startDuration(1, "green") + ` : <em>` + this
                 .productName + `</em></strong></h3>
                             ` + this.printAlert() + this.printButton() + this.printPaiement() +
                 `</div><hr>`
@@ -160,7 +165,7 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
                     style: "currency",
                     currency: "EUR"
                 }) +
-                `</span> tout de suite pour l’abonnement ` + this.startDuration() + ` au lieu de `+ printPreviousChoice(previous_choice) + ` d'abonnement</p><p>Ensuite, je ne paie que ` + this
+                `</span> tout de suite pour l’abonnement ` + this.startDuration(0, "green") + ` au lieu de `+ printPreviousChoice(previous_choice) + ` d'abonnement</p><p>Ensuite, je ne paie que ` + this
                 .default_price.toLocaleString("fr-FR", {
                     style: "currency",
                     currency: "EUR"
