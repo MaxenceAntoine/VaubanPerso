@@ -91,9 +91,9 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
         if (this.isLife()) {
             return "à vie";
         } else if (this.isFreeMonth()) {
-            return convertToDuration(this.renewal_term_length, genre) + ` avec ` + this
+            return convertToDuration(this.renewal_term_length, genre) + ` avec <span style="color:green;"><u>` + this
                 .starting_price_duration +
-                ` mois gratuit`;
+                ` mois gratuit</u></span>`;
         } else {
             return convertToDuration(this.starting_price_duration, genre);
         }
