@@ -268,93 +268,102 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
     // Parcourir chaque balise "publication"
     $("publication").each(function () {
       // Modifier le contenu texte avec la valeur "config.publication"
-      $(this).text(config_bdc.publication);
-    });
+      $(this).html("<em>"+config_bdc.publication+"</em>");
+  });
 
-    // Parcourir chaque balise "auteur"
-    $("auteur").each(function () {
-      // Modifier le contenu texte avec la valeur "config.publication"
+  // Parcourir chaque balise "auteur"
+  $("auteur").each(function () {
+      // Modifier le contenu texte avec la valeur "config.auteur"
       $(this).text(config_bdc.auteur);
-    });
+  });
 
-    // Parcourir chaque balise "previous_choice_price"
-    $("previous_choice_price").each(function () {
-      // Modifier le contenu texte avec le prix de départ du choix sélectionné
+  // Parcourir chaque balise "previous_choice_price"
+  $("previous_choice_price").each(function () {
+      // Modifier le contenu texte avec la valeur "config.publication"
       $(this).text(previous_choice.starting_price.toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR"
+          style: "currency",
+          currency: "EUR"
       }));
-    });
+  });
 
-       // Parcourir chaque balise "previous_choice_duration"
-    $("previous_choice_duration").each(function () {
-        // Modifier le contenu texte avec la durée de départ du choix sélectionné
-        $(this).text(previous_choice.starting_price_duration);
-      });
+  // Parcourir chaque balise "previous_choice_price"
+  $("previous_default_price").each(function () {
+      // Modifier le contenu texte avec la valeur "config.publication"
+      $(this).text(previous_choice.default_price.toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR"
+      }));
+  });
 
-    $('*').filter(function () {
+
+  // Parcourir chaque balise "publication"
+  $("previous_choice_duration").each(function () {
+      // Modifier le contenu texte avec la valeur "config.publication"
+      $(this).text(previous_choice.starting_price_duration);
+  });
+
+  // Parcourir chaque balise "publication"
+  $("previous_choice_duration_text").each(function () {
+      // Modifier le contenu texte avec la valeur "config.publication"
+      $(this).text(convertToDuration(previous_choice.starting_price_duration));
+  });
+
+  $('*').filter(function () {
       // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
       return this.tagName.match(/^PREVIOUS_CHOICE_PRICE_\d{1,2}$/i);
-    }).each(function () {
+  }).each(function () {
       // Récupérez le nom de la balise (ex. "PREVIOUS_CHOICE_PRICE_1")
       var tagName = this.tagName;
       // Utilisez une expression régulière pour extraire le nombre entier de la balise
       var number = parseInt(tagName.match(/\d+/)[0], 10);
-      var starting_price_duration = parseInt(previous_choice.starting_price_duration);
-      var starting_price = parseFloat(previous_choice.starting_price);
-      var default_price = parseFloat(previous_choice.default_price);
-      var renewal_term_length = parseFloat(previous_choice.renewal_term_length);
       // Affichez le nombre entier dans la balise elle-même
-      $(this).text((starting_price + (Math.ceil((number - starting_price_duration) / renewal_term_length) *
-        default_price)).toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR"
-      }));
-      // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
-    });
-
-    
-
-    $('*').filter(function () {
-        // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
-        return this.tagName.match(/^DIFFERENT_PRICE_\d{1,2}$/i);
-    }).each(function () {
-        // Récupérez le nom de la balise (ex. "PREVIOUS_CHOICE_PRICE_1")
-        var tagName = this.tagName;
-        // Utilisez une expression régulière pour extraire le nombre entier de la balise
-        var number = parseInt(tagName.match(/\d+/)[0], 10);
-        // Affichez le nombre entier dans la balise elle-même
-        $(this).text((previous_choice.calculPriceDuration(number) - choices[0].calculPriceDuration(number)).toLocaleString("fr-FR", {
-            style: "currency",
-            currency: "EUR"
-        }));
-    });
-
-   
-     // Parcourir chaque balise "choice_starting_price"
-     $("choice_starting_price").each(function () {
-      // Modifier le contenu texte avec la valeur de la durée de départ du premier choix du tableau
-        $(this).text(choices[0].starting_price.toLocaleString("fr-FR", {
+      $(this).text(previous_choice.calculPriceDuration(number).toLocaleString("fr-FR", {
           style: "currency",
           currency: "EUR"
-        }));
-      });
-
-   
-
-    // Parcourir chaque balise "choice_default_price"
-    $("choice_default_price").each(function () {
-      // Modifier le contenu texte avec la valeur de le prix de renouvellement du premier choix du tableau
-      $(this).text(choices[0].default_price.toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR"
       }));
-    });
+      // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
+  });
 
-    // Parcourir chaque balise "choice_duration"
-    $("choice_duration").each(function () {
-      // Modifier le contenu texte avec la valeur de la durée de départ du premier choix du tableau
+
+  $('*').filter(function () {
+      // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
+      return this.tagName.match(/^DIFFERENT_PRICE_\d{1,2}$/i);
+  }).each(function () {
+      // Récupérez le nom de la balise (ex. "PREVIOUS_CHOICE_PRICE_1")
+      var tagName = this.tagName;
+      // Utilisez une expression régulière pour extraire le nombre entier de la balise
+      var number = parseInt(tagName.match(/\d+/)[0], 10);
+      // Affichez le nombre entier dans la balise elle-même
+      $(this).text((previous_choice.calculPriceDuration(number) - choices[0].calculPriceDuration(number)).toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR"
+      }));
+      // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
+  });
+
+  // Parcourir chaque balise "publication"
+  $("choice_starting_price").each(function () {
+      // Modifier le contenu texte avec la valeur "config.publication"
+      $(this).text(choices[0].starting_price.toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR"
+      }));
+  });
+
+  // Parcourir chaque balise "publication"
+  $("choice_default_price").each(function () {
+      // Modifier le contenu texte avec la valeur "config.publication"
+      $(this).text(choices[0].default_price.toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR"
+      }));
+  });
+
+  // Parcourir chaque balise "publication"
+  $("choice_duration").each(function () {
+      // Modifier le contenu texte avec la valeur "config.publication"
       $(this).text(choices[0].starting_price_duration);
-    });
+  });
+
 
   });
