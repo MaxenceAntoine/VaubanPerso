@@ -271,22 +271,25 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
       $(this).text(config_bdc.publication);
     });
 
-    // Parcourir chaque balise "publication"
-    $("previous_choice_price").each(function () {
+    // Parcourir chaque balise "auteur"
+    $("auteur").each(function () {
       // Modifier le contenu texte avec la valeur "config.publication"
+      $(this).text(config_bdc.auteur);
+    });
+
+    // Parcourir chaque balise "previous_choice_price"
+    $("previous_choice_price").each(function () {
+      // Modifier le contenu texte avec le prix de départ du choix sélectionné
       $(this).text(previous_choice.starting_price.toLocaleString("fr-FR", {
         style: "currency",
         currency: "EUR"
       }));
     });
 
-     // Parcourir chaque balise "publication"
-     $("choice_starting_price").each(function () {
-        // Modifier le contenu texte avec la valeur "config.publication"
-        $(this).text(choices[0].starting_price.toLocaleString("fr-FR", {
-          style: "currency",
-          currency: "EUR"
-        }));
+       // Parcourir chaque balise "previous_choice_duration"
+    $("previous_choice_duration").each(function () {
+        // Modifier le contenu texte avec la durée de départ du choix sélectionné
+        $(this).text(previous_choice.starting_price_duration);
       });
 
     $('*').filter(function () {
@@ -310,6 +313,8 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
       // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
     });
 
+    
+
     $('*').filter(function () {
         // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
         return this.tagName.match(/^DIFFERENT_PRICE_\d{1,2}$/i);
@@ -323,28 +328,32 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
             style: "currency",
             currency: "EUR"
         }));
-        // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
-    });
-    // Parcourir chaque balise "publication"
-    $("previous_choice_duration").each(function () {
-      // Modifier le contenu texte avec la valeur "config.publication"
-      $(this).text(previous_choice.starting_price_duration);
     });
 
    
+     // Parcourir chaque balise "choice_starting_price"
+     $("choice_starting_price").each(function () {
+      // Modifier le contenu texte avec la valeur de la durée de départ du premier choix du tableau
+        $(this).text(choices[0].starting_price.toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR"
+        }));
+      });
 
-    // Parcourir chaque balise "publication"
+   
+
+    // Parcourir chaque balise "choice_default_price"
     $("choice_default_price").each(function () {
-      // Modifier le contenu texte avec la valeur "config.publication"
+      // Modifier le contenu texte avec la valeur de le prix de renouvellement du premier choix du tableau
       $(this).text(choices[0].default_price.toLocaleString("fr-FR", {
         style: "currency",
         currency: "EUR"
       }));
     });
 
-    // Parcourir chaque balise "publication"
+    // Parcourir chaque balise "choice_duration"
     $("choice_duration").each(function () {
-      // Modifier le contenu texte avec la valeur "config.publication"
+      // Modifier le contenu texte avec la valeur de la durée de départ du premier choix du tableau
       $(this).text(choices[0].starting_price_duration);
     });
 
