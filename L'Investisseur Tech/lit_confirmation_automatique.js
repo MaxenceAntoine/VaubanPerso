@@ -198,6 +198,10 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
       case 24:
         genre == 0 ? duration = 'biennal' : duration = 'biennalle';
         break;
+
+      case 36:
+        genre == 0 ? duration = 'de 3 ans' : duration = 'de 3 ans';
+        break;
       default:
         duration = 'durée inconnue';
         break;
