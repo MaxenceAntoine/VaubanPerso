@@ -280,6 +280,15 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
       }));
     });
 
+     // Parcourir chaque balise "publication"
+     $("choice_starting_price").each(function () {
+        // Modifier le contenu texte avec la valeur "config.publication"
+        $(this).text(choices[0].starting_price.toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR"
+        }));
+      });
+
     $('*').filter(function () {
       // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
       return this.tagName.match(/^PREVIOUS_CHOICE_PRICE_\d{1,2}$/i);
@@ -300,20 +309,29 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
       }));
       // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
     });
+
+    $('*').filter(function () {
+        // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
+        return this.tagName.match(/^DIFFERENT_PRICE_\d{1,2}$/i);
+    }).each(function () {
+        // Récupérez le nom de la balise (ex. "PREVIOUS_CHOICE_PRICE_1")
+        var tagName = this.tagName;
+        // Utilisez une expression régulière pour extraire le nombre entier de la balise
+        var number = parseInt(tagName.match(/\d+/)[0], 10);
+        // Affichez le nombre entier dans la balise elle-même
+        $(this).text((previous_choice.calculPriceDuration(number) - choices[0].calculPriceDuration(number)).toLocaleString("fr-FR", {
+            style: "currency",
+            currency: "EUR"
+        }));
+        // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
+    });
     // Parcourir chaque balise "publication"
     $("previous_choice_duration").each(function () {
       // Modifier le contenu texte avec la valeur "config.publication"
       $(this).text(previous_choice.starting_price_duration);
     });
 
-    // Parcourir chaque balise "publication"
-    $("choice_starting_price").each(function () {
-      // Modifier le contenu texte avec la valeur "config.publication"
-      $(this).text(choices[0].starting_price.toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR"
-      }));
-    });
+   
 
     // Parcourir chaque balise "publication"
     $("choice_default_price").each(function () {
