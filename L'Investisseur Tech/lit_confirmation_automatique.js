@@ -121,6 +121,15 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
       }
     }
 
+    /**
+     * Fonction qui retourne le prix du choice en fonction de la durée en mois en commentaire
+     **/
+    Choice.prototype.calculPriceDuration = function (duration = 1) {
+      return (this.starting_price + (Math.ceil((duration - this.starting_price_duration) /
+              this.renewal_term_length) *
+          this.default_price))
+  };
+
     Choice.prototype.printButton = function () {
       var textButton;
       if (this.isNonMerci()) {
@@ -198,7 +207,6 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
       case 24:
         genre == 0 ? duration = 'biennal' : duration = 'biennalle';
         break;
-
       case 36:
         genre == 0 ? duration = 'de 3 ans' : duration = 'de 3 ans';
         break;
@@ -330,10 +338,10 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
 
 
   $('*').filter(function () {
-      // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
+      // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <different_price_...>
       return this.tagName.match(/^DIFFERENT_PRICE_\d{1,2}$/i);
   }).each(function () {
-      // Récupérez le nom de la balise (ex. "PREVIOUS_CHOICE_PRICE_1")
+      // Récupérez le nom de la balise (ex. "DIFFERENT_PRICE_1")
       var tagName = this.tagName;
       // Utilisez une expression régulière pour extraire le nombre entier de la balise
       var number = parseInt(tagName.match(/\d+/)[0], 10);
