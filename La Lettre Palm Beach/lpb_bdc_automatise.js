@@ -547,6 +547,27 @@ document.addEventListener("vanguard-ready", function () {
         changeRecapitulatif(choiceSelected);
     });
 
+    // Ajout d'un écouteur d'événement au changement
+    $('input[name="payment"]').on('change', () => {
+        // Code à exécuter lors du changement de l'input
+        console.log('L\'input a été modifié ! V2');
+
+        customizeChoices(choices);
+
+        addEventOnChoice(choices);
+        var choiceSelected;
+        var inputId = parseInt($('.vanguard-custom-choice.selected input').attr('id').replace(
+            "vanguard-choice-", ""));
+        $.each(choices, function (index, choice) {
+            if (choice.id == inputId) {
+                choiceSelected = choice;
+            }
+        });
+        console.log(inputId);
+        console.log(choiceSelected);
+        changeRecapitulatif(choiceSelected);
+    });
+
     customizeChoices(choices);
     addEventOnChoice(choices);
     changeRecapitulatif(choices[0]);
