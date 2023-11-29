@@ -412,14 +412,21 @@ function printNbDossiers(dossiers, val) {
     }
 }
 
-function printDossiers(dossiers, dossiers_speciaux) {
+function printDossiers(dossiers, dossiers_speciaux, choice_0) {
     if (dossiers.length > 0 || dossiers_speciaux.length > 0) {
         // Trouver l'élément avec l'ID "dossiers"
         const element = $('#dossiers');
-        element.append(`
-    <h3 class="text-center font-weight-bold">Voici tout ce que vous recevez
-        <em><u>IMMÉDIATEMENT</u></em> en rejoignant <em>` + config_bdc.publication + `</em>&nbsp;:
-    </h3>`);
+        if(choice_0.isFreeMonth()){
+            element.append(`
+            <h3 class="text-center font-weight-bold">Voici tout ce que vous recevez
+                <em><u>GRATUITEMENT</u></em> en rejoignant <em>` + config_bdc.publication + `</em>&nbsp;:
+            </h3>`);
+        }else{
+            element.append(`
+            <h3 class="text-center font-weight-bold">Voici tout ce que vous recevez
+                <em><u>IMMÉDIATEMENT</u></em> en rejoignant <em>` + config_bdc.publication + `</em>&nbsp;:
+            </h3>`);
+        }
         if (dossiers_speciaux.length > 0) {
             element.append(`<h4 class="primary mt-5 font-weight-bold text-uppercase">` +
                 printNbDossiers(dossiers_speciaux, true) + `</h4>`);
@@ -571,5 +578,5 @@ document.addEventListener("vanguard-ready", function () {
     customizeChoices(choices);
     addEventOnChoice(choices);
     changeRecapitulatif(choices[0]);
-    printDossiers(dossiers, dossiers_speciaux);
+    printDossiers(dossiers, dossiers_speciaux, choices[0]);
 });
