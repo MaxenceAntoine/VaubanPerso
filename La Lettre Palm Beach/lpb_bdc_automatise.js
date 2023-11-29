@@ -151,11 +151,12 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         if (this.isLife()) {
             affichage = "<strong style=`color:green;`>Offre à vie</strong>"
         } else if (this.isFreeMonth()) {
-            if( this.starting_price_duration > 1){
+            /**if( this.starting_price_duration > 1){
                 affichage = this.starting_price_duration + " mois gratuits";
             }else{
                 affichage = this.starting_price_duration + " mois gratuit";
-            }
+            }**/
+            affichage = "GRATUIT";
         } else if (this.isTrialMonth()) {
             affichage = "Testez pendant " + this.starting_price_duration + " mois";
         } else {
@@ -183,9 +184,11 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         var affichage = `<span class="price mb-4">`;
         if (this.isFreeMonth()) {
             if (this.starting_price_duration > 1){
-                affichage =+ this.starting_price_duration + " mois gratuits à "+this.starting_price+"&nbsp;€</span>";
+                //affichage =+ this.starting_price_duration + " mois gratuits à "+this.starting_price+"&nbsp;€</span>";
+                affichage =+ " 0&nbsp;€ le premier mois</span>";
             }else{
-                affichage =+ this.starting_price_duration + " mois gratuit à "+this.starting_price+"&nbsp;€</span>";
+                //affichage =+ this.starting_price_duration + " mois gratuit à "+this.starting_price+"&nbsp;€</span>";
+                affichage =+ " 0&nbsp;€ les " + starting_price_duration + " premiers mois</span>";
             }
         }
         else if(this.isTrialMonth()){
@@ -419,12 +422,12 @@ function printDossiers(dossiers, dossiers_speciaux, choice_0) {
         if(choice_0.isFreeMonth()){
             element.append(`
             <h3 class="text-center font-weight-bold">Voici tout ce que vous recevez
-                <em><u>GRATUITEMENT</u></em> en rejoignant <em>` + config_bdc.publication + `</em>&nbsp;:
+                <em><u>GRATUITEMENT</u></em> en rejoignant <em>` + config_bdc.publication + `</em> aujourd'hui:
             </h3>`);
         }else{
             element.append(`
             <h3 class="text-center font-weight-bold">Voici tout ce que vous recevez
-                <em><u>IMMÉDIATEMENT</u></em> en rejoignant <em>` + config_bdc.publication + `</em>&nbsp;:
+                <em><u>IMMÉDIATEMENT</u></em> en rejoignant <em>` + config_bdc.publication + `</em> aujourd'hui:
             </h3>`);
         }
         if (dossiers_speciaux.length > 0) {
