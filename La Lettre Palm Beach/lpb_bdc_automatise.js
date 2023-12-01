@@ -183,13 +183,15 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      Choice.prototype.price = function () {
         var affichage = `<span class="price mb-4">`;
         if (this.isFreeMonth()) {
-            if (this.starting_price_duration > 1){
+            /**if (this.starting_price_duration > 1){
                 //affichage =+ this.starting_price_duration + " mois gratuits à "+this.starting_price+"&nbsp;€</span>";
                 affichage =+ " 0&nbsp;€ le premier mois</span>";
             }else{
                 //affichage =+ this.starting_price_duration + " mois gratuit à "+this.starting_price+"&nbsp;€</span>";
                 affichage =+ " 0&nbsp;€ les " + starting_price_duration + " premiers mois</span>";
-            }
+            }**/
+
+            affichage =+ " 0&nbsp;€ le premier mois</span>";
         }
         else if(this.isTrialMonth()){
             if (this.starting_price_duration > 1){
