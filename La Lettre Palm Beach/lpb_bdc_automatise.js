@@ -435,7 +435,7 @@ function printDossiers(dossiers, dossiers_speciaux, choice_0) {
             dossiers_speciaux.forEach((dossier, indice) => {
 
                 element.append(
-                    `<div class="row align-items-center my-2">
+                    `<div class="row align-items-center my-3">
             <div class="col-md-6 col-12 "><img class="d-block mx-auto" style="max-width: 300px;width:100%;" src="` +
                     dossier.url_photo + `" alt="image d'Ipad">
             </div>
@@ -459,7 +459,7 @@ function printDossiers(dossiers, dossiers_speciaux, choice_0) {
                 dossiers.forEach((dossier, indice) => {
 
                     element.append(
-                        `<div class="row align-items-center my-2">
+                        `<div class="row align-items-center my-3">
                     <div class="col-md-6 col-12"><img class="d-block mx-auto" style="max-width: 300px;width:100%;" src="` +
                         dossier.url_photo + `" alt="image d'Ipad">
                     </div>
