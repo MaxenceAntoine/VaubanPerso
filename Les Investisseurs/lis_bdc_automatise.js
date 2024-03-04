@@ -510,6 +510,7 @@ document.addEventListener("vanguard-ready", function () {
     });
     $('#items-choices').removeClass('list-group');
     $('#items-choices').addClass('row');
+    $("#items-choices").css("color", "black");
     customizeChoices(choices);
     addEventOnChoice(choices);
     customSticky(choices);
