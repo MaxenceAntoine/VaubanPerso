@@ -89,9 +89,15 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         if (this.isLife()) {
             return "à vie";
         } else if (this.isFreeMonth()) {
-            return convertToDuration(this.renewal_term_length, genre) + ` avec ` + this
+            if(this.starting_price_duration>1){
+                return convertToDuration(this.renewal_term_length, genre) + ` avec ` + this
+                .starting_price_duration +
+                ` mois gratuits`;
+            }else{
+                return convertToDuration(this.renewal_term_length, genre) + ` avec ` + this
                 .starting_price_duration +
                 ` mois gratuit`;
+            }
         } else {
             return convertToDuration(this.starting_price_duration, genre);
         }
@@ -128,7 +134,12 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         if (this.isLife()) {
             affichage = "Offre à vie"
         } else if (this.isFreeMonth()) {
-            affichage = this.starting_price_duration + " mois gratuit";
+            
+            if(this.starting_price_duration>1){
+                affichage = this.starting_price_duration + " mois gratuits";
+            }else{
+                affichage = this.starting_price_duration + " mois gratuit";
+            }
         } else {
             affichage = this.starting_price_duration + `&nbsp;mois d'abonnement`;
         }
@@ -210,7 +221,11 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             //Dans le cas d'une offre à vie 
             affichage = "Offre à vie"
         } else if (this.isFreeMonth()) {
-            affichage = this.starting_price_duration + " mois gratuit";
+            if(this.starting_price_duration>1){
+                affichage = this.starting_price_duration + " mois gratuits";
+            }else{
+                affichage = this.starting_price_duration + " mois gratuit";
+            }
         } else if (this.starting_price != this.default_price && this.old_price && this
             .starting_price_duration == this.renewal_term_length) {
             affichage = this.starting_price_duration + " mois avec " + Math.round(100 - (this.starting_price *
@@ -424,8 +439,8 @@ function customizeChoices(choices) {
     });
 
     choices.forEach((choice, index) => {
-        VANGUARD_LOCAL_CONFIG.choices[index].className = choices.length <= 2 || choices.length > 6 ? "my-1 col-md-6 col-12 mb-6" :
-            "my-1 col-md col-12 mb-6";
+        VANGUARD_LOCAL_CONFIG.choices[index].className = choices.length <= 2 || choices.length >= 4 ?
+            "my-1 col-md-6 col-12 mb-6" : "my-1 col-md col-12 mb-6";
         // Trouver l'élément avec l'ID "vanguard-choice-[choice.id]"
         const element = $('#vanguard-choice-' + choice.id);
 
