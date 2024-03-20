@@ -350,15 +350,18 @@ function changeRecapitulatif(choice) {
 
 
 function printNbDossiers(dossiers, val) {
-    if (val) {
+    if (val == 1) {
         return dossiers.length > 1 ? `Les ` + dossiers.length + `&nbsp;dossiers spéciaux` : `Le dossier spécial`;
-    } else {
+    } else if(val == 2) {
         return dossiers.length > 1 ? `Les ` + dossiers.length + `&nbsp;dossiers cadeaux` : `Le dossier cadeau`;
+    }
+    else if(val == 3) {
+        return dossiers.length > 1 ? `Vos bonus offerts` : `Votre bonus offert`;
     }
 }
 
-function printDossiers(dossiers, dossiers_speciaux) {
-    if (dossiers.length > 0 || dossiers_speciaux.length > 0) {
+function printDossiers(dossiers, dossiers_speciaux, bonus = null) {
+    if (dossiers.length > 0 || dossiers_speciaux.length > 0 || bonus.length > 0) {
         // Trouver l'élément avec l'ID "dossiers"
         const element = $('#dossiers');
         element.append(`
@@ -367,7 +370,7 @@ function printDossiers(dossiers, dossiers_speciaux) {
   </h3>`);
         if (dossiers_speciaux.length > 0) {
             element.append(`<h4 class="primary mt-5 font-weight-bold text-uppercase">` +
-                printNbDossiers(dossiers_speciaux, true) + `</h4>`);
+                printNbDossiers(dossiers_speciaux, 1) + `</h4>`);
 
             dossiers_speciaux.forEach((dossier, indice) => {
 
@@ -391,7 +394,7 @@ function printDossiers(dossiers, dossiers_speciaux) {
             //dossiers_speciaux.length > 0 ? element.append(`<hr>`) : "";
             if (dossiers.length > 0) {
                 element.append(`<h4 class="primary mt-5 font-weight-bold text-uppercase">` +
-                    printNbDossiers(dossiers, false) + `</h4>`);
+                    printNbDossiers(dossiers, 2) + `</h4>`);
 
                 dossiers.forEach((dossier, indice) => {
 
@@ -406,6 +409,32 @@ function printDossiers(dossiers, dossiers_speciaux) {
                         `&nbsp;: <em>` + dossier.title + `</em></strong>
                       </h4>
                       ` + dossier.description + `
+                  </div>
+              </div><hr>`);
+                });
+
+            }
+        }
+
+        if (bonus.length > 0) {
+            //dossiers_speciaux.length > 0 ? element.append(`<hr>`) : "";
+            if (bonus.length > 0) {
+                element.append(`<h4 class="primary mt-5 font-weight-bold text-uppercase">` +
+                    printNbDossiers(bonus, 3) + `</h4>`);
+
+                    bonus.forEach((bonus, indice) => {
+
+                    element.append(
+                        `<div class="row align-items-center my-2">
+                  <div class="col-md-6 col-12"><img class="d-block mx-auto" style="max-width: 300px;width:100%;" src="` +
+                  bonus.url_photo + `" alt="image d'Ipad">
+                  </div>
+                  <div class="col-md-6 col-12">
+
+                      <h4 class="mt-5"><strong>Bonus N°` + (indice + 1) +
+                        `&nbsp;: <em>` + bonus.title + `</em></strong>
+                      </h4>
+                      ` + bonus.description + `
                   </div>
               </div><hr>`);
                 });
@@ -515,5 +544,14 @@ document.addEventListener("vanguard-ready", function () {
     addEventOnChoice(choices);
     customSticky(choices);
     changeRecapitulatif(choices[0]);
-    printDossiers(dossiers, dossiers_speciaux);
+    if(typeof dossiers == 'undefined'){
+        var bonus = []; // Crée un tableau vide pour les dossiers spéciaux
+    }
+    if(typeof dossiers_speciaux == 'undefined'){
+        var bonus = []; // Crée un tableau vide pour les dossiers spéciaux
+    }
+    if(typeof bonus == 'undefined'){
+        var bonus = []; // Crée un tableau vide pour les dossiers spéciaux
+    }
+    printDossiers(dossiers, dossiers_speciaux, bonus);
 });
