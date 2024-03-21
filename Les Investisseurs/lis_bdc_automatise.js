@@ -33,6 +33,14 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         this.old_price = null;
     }
 
+    try {
+        this.customHtml = JSON.parse(customHtml);
+        this.bandeau = this.customHtml.bandeau;
+    } catch (error) {
+        this.customHtml = "";
+        this.bandeau = null;
+    }
+
     /**
      * Fonction qui permet de savoir si il y a une des mois offerts avant un renouvelllement payant
      **/
@@ -211,21 +219,26 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      **/
     Choice.prototype.printBandeau = function () {
         var affichage = "";
-        if (this.isLife()) {
-            //Dans le cas d'une offre à vie 
-            affichage = "Offre à vie"
-        } else if (this.isFreeMonth()) {
-            affichage = this.starting_price_duration + " mois gratuit";
-        } else if (this.starting_price != this.default_price && this.old_price && this
-            .starting_price_duration == this.renewal_term_length) {
-            affichage = this.starting_price_duration + " mois avec " + Math.round(100 - (this.starting_price *
-                    100 / this.old_price)) +
-                `% de réduction`;
-        } else {
-            //Si il y a ancien prix -> Calcul la remise Sinon affiche "Offre spéciale" 
-            affichage = this.old_price ? Math.round(100 - (this.starting_price * 100 / this.old_price)) +
-                `% de réduction` : "Offre spéciale";
+        if(this.bandeau != ""){
+            if (this.isLife()) {
+                //Dans le cas d'une offre à vie 
+                affichage = "Offre à vie"
+            } else if (this.isFreeMonth()) {
+                affichage = this.starting_price_duration + " mois gratuit";
+            } else if (this.starting_price != this.default_price && this.old_price && this
+                .starting_price_duration == this.renewal_term_length) {
+                affichage = this.starting_price_duration + " mois avec " + Math.round(100 - (this.starting_price *
+                        100 / this.old_price)) +
+                    `% de réduction`;
+            } else {
+                //Si il y a ancien prix -> Calcul la remise Sinon affiche "Offre spéciale" 
+                affichage = this.old_price ? Math.round(100 - (this.starting_price * 100 / this.old_price)) +
+                    `% de réduction` : "Offre spéciale";
+            }
+        }else{
+            affichage = this.bandeau;
         }
+       
         return `<p style="background-color:green; color:white; padding:5px;">` + affichage + `</p>`;
 
     };
