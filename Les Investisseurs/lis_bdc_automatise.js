@@ -36,10 +36,9 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     try {
         this.customHtml = JSON.parse(customHtml);
         this.bandeau = this.customHtml.bandeau;
-        console.log("this.bandeau : " + this.bandeau);
     } catch (error) {
         this.customHtml = "";
-        this.bandeau = null;
+        this.bandeau = "";
     }
 
     /**
@@ -220,8 +219,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      **/
     Choice.prototype.printBandeau = function () {
         var affichage = "";
-        console.log(`this.bandeau == "" : ` + this.bandeau == "");
-        if(this.bandeau == ""){
+        if(this.bandeau == "undefined" || this.bandeau == ""){
             if (this.isLife()) {
                 //Dans le cas d'une offre à vie 
                 affichage = "Offre à vie"
@@ -531,7 +529,7 @@ document.addEventListener("vanguard-ready", function () {
 
     });
 
-    //window.choices_window = choices;
+    window.choices_window = choices;
 
     // Ajout d'un écouteur d'événement au changement
     $('input[name="vanguard-payment-method-radio"]').on('change', () => {
