@@ -249,7 +249,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      **/
     Choice.prototype.printStartingPrice = function () {
         if(estEntier(this.starting_price)){
-            return this.starting_price;
+            return this.starting_price+"&nbsp;€";
         }
         else{
             return this.starting_price.toLocaleString("fr-FR", {style: "currency",currency: "EUR"});
