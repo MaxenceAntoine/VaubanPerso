@@ -249,10 +249,10 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      **/
     Choice.prototype.printStartingPrice = function () {
         if(estDecimal(this.starting_price)){
-            return choice.starting_price.toLocaleString("fr-FR", {style: "currency",currency: "EUR"});
+            return this.starting_price.toLocaleString("fr-FR", {style: "currency",currency: "EUR"});
         }
         else{
-            return choice.starting_price;
+            return this.starting_price;
         }
     };
 
