@@ -244,10 +244,22 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
 
     };
 
+    /**
+     * Fonction qui retourne l'affichage du bandeau de promotion
+     **/
+    Choice.prototype.printStartingPrice = function () {
+        if(estDecimal(this.starting_price)){
+            return choice.starting_price.toLocaleString("fr-FR", {style: "currency",currency: "EUR"});
+        }
+        else{
+            return choice.starting_price;
+        }
+    };
+
 
     Choice.prototype.printMoyenPaiement = function () {
         if (this.paymentMethod == 'sepa') {
-            return "mandant SEPA";
+            return "mandat SEPA";
         } else {
             return "carte de crédit";
         }
@@ -263,6 +275,13 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
 
     };
 
+}
+
+// Vérifie si la variable x est une décimale
+function estDecimal(x) {
+    // Expression régulière pour vérifier une décimale
+    var regex = /^\d*\.?\d+$/;
+    return regex.test(x);
 }
 
 function choix_en_Cours() {
@@ -490,10 +509,9 @@ function customizeChoices(choices) {
                 ` + choice.printOffre() + `
                 </p>
                 ` + choice.printOldPrice() + `
-                <span class="price mb-4"><span class="currency">` + choice.starting_price.toLocaleString("fr-FR", {style: "currency",currency: "EUR"}) + ` </span>TTC</span>
+                <span class="price mb-4"><span class="currency">` + choice.printStartingPrice() + ` </span>TTC</span>
 
-                <br><p style="font-size:12px" class="mt-4 mb-2"">` + choice
-            .printRenouvellement() + `<br>Annulable sur simple demande</p>` + choice.printBandeau() + `
+                <br><p style="font-size:12px" class="mt-4 mb-2"">` + choice.printRenouvellement() + `<br>Annulable sur simple demande</p>` + choice.printBandeau() + `
 
             </div>
         </div>
@@ -559,6 +577,8 @@ document.addEventListener("vanguard-ready", function () {
             return false; // Sortir de la boucle $.each()
         }
     });
+
+    console.log(choice_default);
 
     $('#items-choices').removeClass('list-group');
     $('#items-choices').addClass('row');
