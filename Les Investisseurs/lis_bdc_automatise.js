@@ -248,11 +248,11 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      * Fonction qui retourne l'affichage du bandeau de promotion
      **/
     Choice.prototype.printStartingPrice = function () {
-        if(estDecimal(this.starting_price)){
-            return this.starting_price.toLocaleString("fr-FR", {style: "currency",currency: "EUR"});
+        if(estEntier(this.starting_price)){
+            return this.starting_price;
         }
         else{
-            return this.starting_price;
+            return this.starting_price.toLocaleString("fr-FR", {style: "currency",currency: "EUR"});
         }
     };
 
@@ -277,10 +277,10 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
 
 }
 
-// Vérifie si la variable x est une décimale
-function estDecimal(x) {
-    // Expression régulière pour vérifier une décimale
-    var regex = /^\d*\.?\d+$/;
+// Vérifie si la variable x est un entier (pas une décimale)
+function estEntier(x) {
+    // Expression régulière pour vérifier un entier (pas une décimale)
+    var regex = /^\d+$/;
     return regex.test(x);
 }
 
