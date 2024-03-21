@@ -6,7 +6,7 @@ function Dossier(title, url_photo, description) {
 
 
 function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, renewal_term_length, starting_price,
-    default_price, auto_renew, customHtml) {
+    default_price, auto_renew, customHtml, isDefault) {
     this.id = id;
     this.index = index;
     this.stackLetter = stackLetter
@@ -15,6 +15,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     this.default_price = default_price;
     this.auto_renew = auto_renew;
     this.customHtml = customHtml;
+    this.isDefault = isDefault;
 
 
     if (starting_price_duration == 0) {
@@ -525,7 +526,7 @@ document.addEventListener("vanguard-ready", function () {
         choices.push(new Choice(choice.id, index + 1, choice.stackLetter, choice.paymentMethod,
             choice.startingPriceDuration,
             choice.renewalTermLength, choice.startingPrice, choice.defaultPrice, choice
-            .isBcl, choice.customHtml))
+            .isBcl, choice.customHtml, choice.isDefault))
 
     });
 
@@ -551,12 +552,20 @@ document.addEventListener("vanguard-ready", function () {
         console.log(choiceSelected);
         changeRecapitulatif(choiceSelected);
     });
+    var choice_default = choices[0];
+    $.each(choices, function(index, choice) {
+        if (choice.isDefault) {
+            choice_default = choice;
+            return false; // Sortir de la boucle $.each()
+        }
+    });
+
     $('#items-choices').removeClass('list-group');
     $('#items-choices').addClass('row');
     $("#items-choices").css("color", "black");
     customizeChoices(choices);
     addEventOnChoice(choices);
     customSticky(choices);
-    changeRecapitulatif(choices[0]);
+    changeRecapitulatif(choice_default);
     printDossiers(dossiers, dossiers_speciaux, bonus);
 });
