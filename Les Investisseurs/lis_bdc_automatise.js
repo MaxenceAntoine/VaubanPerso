@@ -220,7 +220,8 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      **/
     Choice.prototype.printBandeau = function () {
         var affichage = "";
-        if(this.bandeau == "undefined" || this.bandeau == ""){
+        console.log("this.bandeau : " + this.bandeau);
+        if(this.bandeau == undefined || this.bandeau == ""){
             if (this.isLife()) {
                 //Dans le cas d'une offre à vie 
                 affichage = "Offre à vie"
