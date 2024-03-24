@@ -545,14 +545,5 @@ document.addEventListener("vanguard-ready", function () {
     addEventOnChoice(choices);
     customSticky(choices);
     changeRecapitulatif(choices[0]);
-    if(dossiers === undefined){
-        var dossiers = []; // Crée un tableau vide pour les dossiers spéciaux
-    }
-    if(dossiers_speciaux === undefined){
-        var dossiers_speciaux = []; // Crée un tableau vide pour les dossiers spéciaux
-    }
-    if(bonus === undefined){
-        var bonus = []; // Crée un tableau vide pour les dossiers spéciaux
-    }
     printDossiers(dossiers, dossiers_speciaux, bonus);
 });
