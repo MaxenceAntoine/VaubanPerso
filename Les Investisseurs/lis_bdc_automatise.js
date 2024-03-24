@@ -417,6 +417,7 @@ function printDossiers(dossiers, dossiers_speciaux, bonus) {
         }
 
         if (bonus.length > 0) {
+            console.log
             //dossiers_speciaux.length > 0 ? element.append(`<hr>`) : "";
             if (bonus.length > 0) {
                 element.append(`<h4 class="primary mt-5 font-weight-bold text-uppercase">` +
@@ -544,13 +545,13 @@ document.addEventListener("vanguard-ready", function () {
     addEventOnChoice(choices);
     customSticky(choices);
     changeRecapitulatif(choices[0]);
-    if(typeof dossiers == 'undefined'){
+    if(dossiers === undefined){
         var dossiers = []; // Crée un tableau vide pour les dossiers spéciaux
     }
-    if(typeof dossiers_speciaux == 'undefined'){
+    if(dossiers_speciaux === undefined){
         var dossiers_speciaux = []; // Crée un tableau vide pour les dossiers spéciaux
     }
-    if(typeof bonus == 'undefined'){
+    if(bonus === undefined){
         var bonus = []; // Crée un tableau vide pour les dossiers spéciaux
     }
     printDossiers(dossiers, dossiers_speciaux, bonus);
