@@ -355,7 +355,7 @@ function printNbDossiers(dossiers, val) {
     } else if(val == 2) {
         return dossiers.length > 1 ? `Les ` + dossiers.length + `&nbsp;dossiers cadeaux` : `Le dossier cadeau`;
     }
-    else if(val == 3) {
+    else {
         return dossiers.length > 1 ? `Vos bonus offerts` : `Votre bonus offert`;
     }
 }
@@ -365,9 +365,9 @@ function printDossiers(dossiers, dossiers_speciaux, bonus) {
         // Trouver l'élément avec l'ID "dossiers"
         const element = $('#dossiers');
         element.append(`
-  <h3 class="text-center font-weight-bold text-uppercase">Voici tout ce que vous recevez en rejoignant <em>` +
-            config_bdc.publication + `</em>&nbsp;:
-  </h3>`);
+            <h3 class="text-center font-weight-bold text-uppercase">Voici tout ce que vous recevez en rejoignant <em>` +
+                        config_bdc.publication + `</em>&nbsp;:
+            </h3>`);
         if (dossiers_speciaux.length > 0) {
             element.append(`<h4 class="primary mt-5 font-weight-bold text-uppercase">` +
                 printNbDossiers(dossiers_speciaux, 1) + `</h4>`);
@@ -545,10 +545,10 @@ document.addEventListener("vanguard-ready", function () {
     customSticky(choices);
     changeRecapitulatif(choices[0]);
     if(typeof dossiers == 'undefined'){
-        var bonus = []; // Crée un tableau vide pour les dossiers spéciaux
+        var dossiers = []; // Crée un tableau vide pour les dossiers spéciaux
     }
     if(typeof dossiers_speciaux == 'undefined'){
-        var bonus = []; // Crée un tableau vide pour les dossiers spéciaux
+        var dossiers_speciaux = []; // Crée un tableau vide pour les dossiers spéciaux
     }
     if(typeof bonus == 'undefined'){
         var bonus = []; // Crée un tableau vide pour les dossiers spéciaux
