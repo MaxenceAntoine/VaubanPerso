@@ -360,7 +360,7 @@ function printNbDossiers(dossiers, val) {
     }
 }
 
-function printDossiers(dossiers, dossiers_speciaux, bonus = null) {
+function printDossiers(dossiers, dossiers_speciaux, bonus) {
     if (dossiers.length > 0 || dossiers_speciaux.length > 0 || bonus.length > 0) {
         // Trouver l'élément avec l'ID "dossiers"
         const element = $('#dossiers');
