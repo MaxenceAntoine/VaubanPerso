@@ -144,21 +144,25 @@
           }) + ` par ` +
           convertToDurationBis(this.renewal_term_length) + `)`
       } else {
-        return `<p>Je paie <span style="color: #38761d;">` + this.starting_price.toLocaleString("fr-FR", {
+        if(this.isFreeMonth()){
+          
+        }else{
+          return `<p>Je paie <span style="color: #38761d;">` + this.starting_price.toLocaleString("fr-FR", {
             style: "currency",
             currency: "EUR"
           }) +
           `</span> tout de suite pour l’abonnement ` + this.startDuration() + ` au lieu de ` +
-          previous_choice.starting_price.toLocaleString("fr-FR", {
+          previous_choice.default_price.toLocaleString("fr-FR", {
             style: "currency",
             currency: "EUR"
-          }) + ` par ` + convertToDurationBis(previous_choice
-            .starting_price_duration) + ` d'abonnement</p><p>Ensuite, je ne paie que ` + this
+          }) + ` par ` + convertToDurationBis(previous_choice.renewal_term_length) + 
+          ` d'abonnement</p><p>Ensuite, je ne paie que ` + this
           .default_price.toLocaleString("fr-FR", {
             style: "currency",
             currency: "EUR"
           }) + ` par ` + convertToDurationBis(this.renewal_term_length) +
           ` pour maintenir mon abonnement actif.</p>`;
+        }
       }
       return
     }
@@ -280,6 +284,20 @@
         currency: "EUR"
       }));
     });
+    
+    
+    // Parcourir chaque balise "publication"
+    $("previous_choice_duration").each(function () {
+      // Modifier le contenu texte avec la valeur "config.publication"
+      $(this).text(previous_choice.starting_price_duration);
+    });
+    
+    
+    // Parcourir chaque balise "publication"
+    $("previous_choice_duration_text").each(function () {
+      // Modifier le contenu texte avec la valeur "config.publication"
+      $(this).text(convertToDurationBis(previous_choice.starting_price_duration));
+    });
 
     $('*').filter(function () {
       // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
@@ -300,11 +318,6 @@
         currency: "EUR"
       }));
       // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
-    });
-    // Parcourir chaque balise "publication"
-    $("previous_choice_duration").each(function () {
-      // Modifier le contenu texte avec la valeur "config.publication"
-      $(this).text(previous_choice.starting_price_duration);
     });
 
     // Parcourir chaque balise "publication"
