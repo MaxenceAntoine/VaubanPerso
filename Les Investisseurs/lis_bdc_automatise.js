@@ -395,14 +395,6 @@ function printNbDossiers(dossiers, val) {
 }
 
 function printDossiers(dossiers, dossiers_speciaux, bonus) {
-    console.log("dossiers : "+ dossiers);
-    console.log("dossiers_speciaux : "+ dossiers_speciaux);
-    console.log("bonus : "+ bonus);
-    if (typeof bonus !== 'undefined') {
-        console.log("La varible exsite");
-    } else {
-        console.log("La varible n'exsite pas");
-    }
     if (dossiers.length > 0 || dossiers_speciaux.length > 0 || bonus.length > 0) {
         // Trouver l'élément avec l'ID "dossiers"
         const element = $('#dossiers');
@@ -596,5 +588,8 @@ document.addEventListener("vanguard-ready", function () {
     addEventOnChoice(choices);
     customSticky(choices);
     changeRecapitulatif(choice_default);
+    console.log("dossiers : "+ dossiers);
+    console.log("dossiers_speciaux : "+ dossiers_speciaux);
+    console.log("bonus : " + bonus);
     printDossiers(dossiers, dossiers_speciaux, bonus);
 });
