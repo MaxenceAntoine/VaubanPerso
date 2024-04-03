@@ -588,5 +588,11 @@ document.addEventListener("vanguard-ready", function () {
     addEventOnChoice(choices);
     customSticky(choices);
     changeRecapitulatif(choice_default);
+    if (typeof bonus !== 'undefined') {
+        console.log("La variable Bonus existe");
+    } else {
+        console.log("La variable Bonus n'existe pas");
+        var bonus = [];
+    }
     printDossiers(dossiers, dossiers_speciaux, bonus);
 });
