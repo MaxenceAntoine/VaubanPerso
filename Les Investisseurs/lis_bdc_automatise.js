@@ -588,8 +588,7 @@ document.addEventListener("vanguard-ready", function () {
     addEventOnChoice(choices);
     customSticky(choices);
     changeRecapitulatif(choice_default);
-    console.log("dossiers : "+ typeof dossiers);
-    console.log("dossiers_speciaux : "+ typeof dossiers_speciaux);
+    typeof bonus == 'undefined' ? bonus = [] :
     console.log("bonus : " + typeof bonus);
     printDossiers(dossiers, dossiers_speciaux, bonus);
 });
