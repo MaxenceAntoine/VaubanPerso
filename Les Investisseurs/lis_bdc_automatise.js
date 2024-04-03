@@ -588,6 +588,7 @@ document.addEventListener("vanguard-ready", function () {
     addEventOnChoice(choices);
     customSticky(choices);
     changeRecapitulatif(choice_default);
+    console.log(bonus);
     if (typeof bonus !== 'undefined') {
         console.log("La variable Bonus existe");
     } else {
