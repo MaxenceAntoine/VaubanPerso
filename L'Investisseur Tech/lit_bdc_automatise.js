@@ -439,7 +439,7 @@ function customizeChoices(choices) {
     });
 
     choices.forEach((choice, index) => {
-        VANGUARD_LOCAL_CONFIG.choices[index].className = choices.length <= 2 || choices.length >= 4 ? "my-1 col-md-6 col-12 mb-6" :
+        VANGUARD_LOCAL_CONFIG.choices[index].className = choices.length <= 4 ? "my-1 col-md-6 col-12 mb-6" :
                 "my-1 col-md col-12 mb-6";
         // Trouver l'élément avec l'ID "vanguard-choice-[choice.id]"
         const element = $('#vanguard-choice-' + choice.id);
