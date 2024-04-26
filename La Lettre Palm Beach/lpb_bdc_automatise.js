@@ -145,6 +145,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         if (this.isLife()) {
             affichage = "Offre à vie"
         } else if (this.isFreeMonth()) {
+            //affichage = this.starting_price_duration + " mois gratuit";
             affichage = this.starting_price_duration + " mois gratuit";
         } else if (this.isTrialMonth()) {
             affichage = "Testez pendant " + this.starting_price_duration + " mois";
@@ -171,13 +172,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      **/
      Choice.prototype.price = function () {
         var affichage = "";
-        if (this.isFreeMonth()) {
-            affichage = `<span class="price mb-4">`+this.starting_price_duration + " mois gratuit à "+this.starting_price+"&nbsp;€</span>";
-        }
-        else if(this.isTrialMonth()){
-            affichage = `<span class="price mb-4">`+this.starting_price_duration + " mois d'essai à "+this.starting_price+"&nbsp;€</span>";
-        }
-        else if(this.old_price == null){
+        if(this.old_price == null){
             affichage = `<span class="price mb-4"><span class="currency" style="color: red;">` + this.starting_price + `&nbsp;€ </span>TTC</span>`;
         }
         else {
