@@ -28,10 +28,15 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     try {
         this.customHtml = JSON.parse(customHtml);
         this.old_price = this.customHtml.old_price;
+        this.engagement = this.customHtml.engagement;
     } catch (error) {
         this.customHtml = "";
         this.old_price = null;
+        this.engagement = 0;
     }
+
+
+    
 
     /**
      * Fonction qui permet de savoir si il y a une des mois offerts avant un renouvelllement payant
@@ -156,6 +161,18 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         return this.old_price ? `<p style="text-decoration: line-through;; color: red; font-weight: 600; margin-bottom: 0px !important;">
                       ` + this.old_price + `&nbsp;€</p>` : `<p style="margin-bottom: 0px !important;">&nbsp;</p>`;
     };
+
+     /**
+     * Fonction qui retourne l'affichage des conditions d'engagement. ("Annulable sur simple demande" si pas d'info)
+     **/
+     Choice.prototype.printEngagement = function () {
+        if(this.engagement == 12){
+            return "Engagement de 12 mois";
+        }else{
+            return "Annulable sur simple demande";
+        }
+    };
+    
 
     /**
      * Fonction qui retourne l'affichage du récapitulatif
@@ -458,7 +475,7 @@ function customizeChoices(choices) {
                   <span class="price mb-4"><span class="currency">` + choice.starting_price + `&nbsp;€ </span>TTC</span>
 
                   <br><p style="font-size:12px" class="mt-4 mb-2"">` + choice
-            .printRenouvellement() + `<br>Annulable sur simple demande</p>` + choice.printBandeau() + `
+            .printRenouvellement() + `<br>`+ choice.printEngagement() + `Annulable sur simple demande</p>` + choice.printBandeau() + `
 
               </div>
           </div>
