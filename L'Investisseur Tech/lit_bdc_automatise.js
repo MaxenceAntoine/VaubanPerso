@@ -36,7 +36,16 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     }
 
 
-    
+    /**
+     * Fonction qui permet de savoir si il y a une des mois offerts avant un renouvelllement payant
+     **/
+    Choice.prototype.isEngagement = function () {
+        if (this.engagement > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
     /**
      * Fonction qui permet de savoir si il y a une des mois offerts avant un renouvelllement payant
@@ -91,21 +100,27 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      * Fonction qui retourne la durée de renouvellement du choice de base
      **/
     Choice.prototype.startDuration = function (genre = 0) {
+        var affichage = "";
         if (this.isLife()) {
-            return "à vie";
+            affichage = "à vie";
         } else if (this.isFreeMonth()) {
             if(this.starting_price_duration>1){
-                return convertToDuration(this.renewal_term_length, genre) + ` avec ` + this
+                affichage = convertToDuration(this.renewal_term_length, genre) + ` avec ` + this
                 .starting_price_duration +
                 ` mois gratuits`;
             }else{
-                return convertToDuration(this.renewal_term_length, genre) + ` avec ` + this
+                affichage = convertToDuration(this.renewal_term_length, genre) + ` avec ` + this
                 .starting_price_duration +
                 ` mois gratuit`;
             }
         } else {
-            return convertToDuration(this.starting_price_duration, genre);
+            affichage = convertToDuration(this.starting_price_duration, genre);
         }
+        if(this.isEngagement()){
+            affichage = affichage + "AVEC ENGAGEMENT SUR "+this.engagement+" MOIS"
+        }
+
+        return affichage;
     };
 
     /**
@@ -162,16 +177,29 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
                       ` + this.old_price + `&nbsp;€</p>` : `<p style="margin-bottom: 0px !important;">&nbsp;</p>`;
     };
 
-     /**
+    /**
      * Fonction qui retourne l'affichage des conditions d'engagement. ("Annulable sur simple demande" si pas d'info)
-     **/
-     Choice.prototype.printEngagement = function () {
+    **/
+    Choice.prototype.printEngagement = function () {
         if(this.engagement == 12){
-            return "Engagement de 12 mois";
+            return "Engagement sur 1 an<br>Puis annulable sur simple demande";
         }else{
             return "Annulable sur simple demande";
         }
     };
+
+    /**
+     * Fonction qui retourne l'affichage des conditions d'engagement. ("Annulable sur simple demande" si pas d'info)
+    **/
+    Choice.prototype.printEngagementRecap = function () {
+        if(this.engagement = 12 ){
+            return "pendant un an";
+        }else{
+            return "";
+        }
+    };
+
+    
     
 
     /**
@@ -195,8 +223,8 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
 
                     <p>Le renouvellement est automatique, à la fin de ma période d'abonnement je serai donc débité de ` +
             this.default_price + `&nbsp;€ par ` + this.printMoyenPaiement() +
-            ` par ` + convertToDurationBis(this.renewal_term_length) +
-            ` et ainsi de suite jusqu'à ce que vous demandiez l'arrêt de l'abonnement.
+            ` par ` + convertToDurationBis(this.renewal_term_length) +` `+ this.printEngagementRecap() +
+            ` jusqu'à ce que vous demandiez l'arrêt de l'abonnement.
                     </p>
 
                     <p>Je me réjouis de découvrir ` + config_bdc.publication + ` avec ` + config_bdc.auteur +
@@ -475,7 +503,7 @@ function customizeChoices(choices) {
                   <span class="price mb-4"><span class="currency">` + choice.starting_price + `&nbsp;€ </span>TTC</span>
 
                   <br><p style="font-size:12px" class="mt-4 mb-2"">` + choice
-            .printRenouvellement() + `<br>`+ choice.printEngagement() + `Annulable sur simple demande</p>` + choice.printBandeau() + `
+            .printRenouvellement() + `<br>`+ choice.printEngagement() + `</p>` + choice.printBandeau() + `
 
               </div>
           </div>
