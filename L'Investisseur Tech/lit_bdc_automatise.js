@@ -127,13 +127,20 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      * Fonction qui retourne le header du choice
      **/
     Choice.prototype.printHeader = function () {
+        var affichage = "";
         if (this.isLife()) {
-            return "à vie";
+            affichage = "à vie";
         } else if (this.isFreeMonth()) {
-            return "gratuit";
+            affichage = "gratuit";
         } else {
-            return convertToDuration(this.starting_price_duration);
+            affichage = convertToDuration(this.starting_price_duration);
         }
+        if(this.isEngagement()){
+            affichage = affichage + `<p style="font-size: 12px;margin-top:-5px;">Engagement 12 mois</p>`
+        }
+        return affichage;
+
+       
     };
 
     /**
@@ -192,8 +199,8 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      * Fonction qui retourne l'affichage des conditions d'engagement. ("Annulable sur simple demande" si pas d'info)
     **/
     Choice.prototype.printEngagementRecap = function () {
-        if(this.engagement = 12 ){
-            return "pendant un an";
+        if(this.isEngagement()){
+            return `avec un engagement de `+ this.engagement +` mois à `+ this.default_price + `&nbsp;€ par ` + convertToDurationBis(this.renewal_term_length)
         }else{
             return "";
         }
@@ -221,9 +228,9 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             `, des dossiers cadeaux ainsi que des alertes mensuelles.
                     </p>
 
-                    <p>Le renouvellement est automatique, à la fin de ma période d'abonnement je serai donc débité de ` +
+                    <p>Le renouvellement est automatique, à la fin de ma période d'abonnement ` + this.printEngagementRecap() + ` je serai donc débité de ` +
             this.default_price + `&nbsp;€ par ` + this.printMoyenPaiement() +
-            ` par ` + convertToDurationBis(this.renewal_term_length) +` `+ this.printEngagementRecap() +
+            ` par ` + convertToDurationBis(this.renewal_term_length) +
             ` jusqu'à ce que vous demandiez l'arrêt de l'abonnement.
                     </p>
 
