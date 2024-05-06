@@ -117,7 +117,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             affichage = convertToDuration(this.starting_price_duration, genre);
         }
         if(this.isEngagement()){
-            affichage = affichage + "AVEC ENGAGEMENT SUR "+this.engagement+" MOIS"
+            affichage = affichage + " avec engagement sur "+this.engagement+" mois"
         }
 
         return affichage;
