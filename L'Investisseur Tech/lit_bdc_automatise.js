@@ -228,7 +228,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             `, des dossiers cadeaux ainsi que des alertes mensuelles.
                     </p>
 
-                    <p>Le renouvellement est automatique, à la fin de ma période d'abonnement ` + this.printEngagementRecap() + ` je serai donc débité de ` +
+                    <p>Le renouvellement est automatique, à la fin de ma période d'abonnement ` + this.printEngagementRecap() + `, je serai donc débité de ` +
             this.default_price + `&nbsp;€ par ` + this.printMoyenPaiement() +
             ` par ` + convertToDurationBis(this.renewal_term_length) +
             ` jusqu'à ce que vous demandiez l'arrêt de l'abonnement.
