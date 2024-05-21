@@ -246,7 +246,8 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             //Dans le cas d'une offre à vie 
             affichage = "Offre à vie"
         } else if (this.isFreeMonth()) {
-            affichage = this.starting_price_duration + " mois gratuit";
+            //affichage = this.starting_price_duration + " mois gratuit";
+            affichage = "Gratuit";
         } else if (this.starting_price != this.default_price && this.old_price && this
             .starting_price_duration == this.renewal_term_length) {
             affichage = this.starting_price_duration + " mois avec " + Math.round(100 - (this.starting_price *
