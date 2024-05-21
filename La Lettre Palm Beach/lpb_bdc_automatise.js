@@ -119,7 +119,8 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         if (this.isLife()) {
             return "à vie";
         } else if (this.isFreeMonth()) {
-            return "gratuit";
+            //return "gratuit";
+            return convertToDuration(this.starting_price_duration);
         } else if (this.isTrialMonth()){
             return this.starting_price_duration + " mois d'essai";
         } else {
@@ -145,8 +146,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         if (this.isLife()) {
             affichage = "Offre à vie"
         } else if (this.isFreeMonth()) {
-            //affichage = this.starting_price_duration + " mois gratuit";
-            affichage = this.starting_price_duration + " mois gratuit";
+            affichage = this.starting_price_duration + " mois offert";
         } else if (this.isTrialMonth()) {
             affichage = "Testez pendant " + this.starting_price_duration + " mois";
         } else {
