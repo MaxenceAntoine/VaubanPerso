@@ -120,7 +120,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             return "à vie";
         } else if (this.isFreeMonth()) {
             //return "gratuit";
-            return convertToDuration(this.starting_price_duration);
+            return convertToDuration(this.renewal_term_length);
         } else if (this.isTrialMonth()){
             return this.starting_price_duration + " mois d'essai";
         } else {
