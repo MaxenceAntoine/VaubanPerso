@@ -185,11 +185,14 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     **/
     Choice.prototype.offreSpeciale = function () {
         if (this.starting_price_duration != this.renewal_term_length) {
-            if(this.starting_price_duration = 1){
+            if(this.starting_price_duration == 1){
                 return "<p>le premier mois</p>";
             }
-            else{
+            else if(this.starting_price_duration == 12){
+                return "<p>la première année</p>";
+            }else{
                 return "<p>les "+this.starting_price_duration+" premiers mois</p>";
+
             }
         }
         return "";
@@ -268,7 +271,17 @@ function convertToDurationBis(number) {
     }
     return duration;
 }
-function 
+
+
+function printPrice(price){
+    var regex = /^\d+$/
+    if(regex.test(price)){
+        return price+"&nbsp;€";
+    }
+    else{
+        return price.toLocaleString("fr-FR", {style: "currency",currency: "EUR"});
+    }
+}
 
 function getDataId($element) {
     var ccId = $element.attr('data-1c-cc-id');
@@ -315,8 +328,7 @@ document.addEventListener("falcon-ready", function () {
         const orderFormCode = $(this).attr('data-order-form-code');
         var id_choice = getDataId($(this));
         // Créez l'URL pour la requête JSON en utilisant la valeur de "orderFormCode"
-        const jsonUrl = `https://secure.la-lettre-palm-beach.com/${orderFormCode}
-        /order-form/config.json`;
+        const jsonUrl = `https://secure.la-lettre-palm-beach.com/${orderFormCode}/order-form/config.json`;
         // Effectuez la requête JSON
         console.log("jsonUrl: "+jsonUrl);
         console.log("id_choice: "+id_choice);
@@ -377,13 +389,14 @@ document.addEventListener("falcon-ready", function () {
                         choices.push(choice_now);
 
                         if(choice_now.isFreeMonth()){
-                            
-                            choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez d'un mois gratuit puis serez débité de `+choice_now.default_price+`&nbsp;€ grâce à votre `+choice_now.printMoyenPaiement()+`</p>`);
+                            choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez d'un mois gratuit puis serez débité de `+printPrice(choice_now.default_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p>`);
                         
                         }else{
-                            choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton vous débitera de `+choice_now.starting_price+`&nbsp;€ grâce à votre `+choice_now.printMoyenPaiement()+`</p>`);
+                            choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton vous débitera de `+printPrice(choice_now.starting_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p>`);
                         }
-                        $(".bloc_recap").append(choice_now.printRecapitulatif());
+                        if((choice_now.isSepa() && sepa == "True") || choice_now.isSepa() == false && cc == "True"){
+                            $(".bloc_recap").append(choice_now.printRecapitulatif());
+                        }
                     }
                 });
                 window.choices_window = choices;
