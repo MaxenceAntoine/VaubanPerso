@@ -327,7 +327,7 @@ document.addEventListener("falcon-ready", function () {
         const orderFormCode = $(this).attr('data-order-form-code');
         var id_choice = getDataId($(this));
         // Créez l'URL pour la requête JSON en utilisant la valeur de "orderFormCode"
-        const jsonUrl = `https://secure.la-lettre-palm-beach.com/${orderFormCode}/order-form/config.json`;
+        const jsonUrl = `https://secure.vauban-editions.com/${orderFormCode}/order-form/config.json`;
         // Effectuez la requête JSON
         console.log("jsonUrl: "+jsonUrl);
         console.log("id_choice: "+id_choice);
