@@ -317,6 +317,7 @@ document.addEventListener("falcon-ready", function () {
     var colorChoice = ["red","green","blue"];
     var nbchoiceSEPA = 0;
     var nbchoiceCC = 0;
+    console.log("TEST");
     // Crée un tableau vide pour les choices
     // Sélectionnez tous les boutons avec l'attribut "data-type" égal à "direct"
     const boutonsDirect = $('[data-type-link="1c_sepa-or-1c_cc"]');
