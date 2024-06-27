@@ -387,7 +387,7 @@ document.addEventListener("falcon-ready", function () {
                         // Ajout de la div au-dessus du bouton dans la div parent
                         choice_div.before(divAuDessus);
                         choice_div.addClass(`my-3`);
-                        choice_div.children().first().html(`Profitez de l'offre en 1C`);
+                        choice_div.children().first().html(`Je profite de l'offre en 1 clic`);
                         // Ajout de la div au-dessus du bouton dans la div parent
                         // Ajout du bouton dans la div parent
                         choices.push(choice_now);
@@ -398,6 +398,7 @@ document.addEventListener("falcon-ready", function () {
                         }else{
                             choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton vous débitera de `+printPrice(choice_now.starting_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p>`);
                         }
+                        
                         if((choice_now.isSepa() && sepa == "True") || choice_now.isSepa() == false && cc == "True"){
                             $(".bloc_recap").append(choice_now.printRecapitulatif());
                         }
