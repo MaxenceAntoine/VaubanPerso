@@ -386,7 +386,7 @@ document.addEventListener("falcon-ready", function () {
                         // Ajout de la div au-dessus du bouton dans la div parent
                         choice_div.before(divAuDessus);
                         choice_div.addClass(`my-3`);
-                        choice_div.children().first().html(`Profitez de l'offre en 1C`);
+                        choice_div.children().first().html(`Je profite de l'offre en 1 clic`);
                         // Ajout de la div au-dessus du bouton dans la div parent
                         // Ajout du bouton dans la div parent
                         choices.push(choice_now);
