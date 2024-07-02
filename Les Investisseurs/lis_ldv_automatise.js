@@ -362,7 +362,11 @@ document.addEventListener("falcon-ready", function () {
                         //var divChoice = $(`<div class="block-offre col-sm-12 my-2 `+choice_size+` text-center"></div>`);
                         //choice_div.wrap(divChoice);
                         choice_div.parent().removeClass();
-                        choice_div.parent().addClass(`block-offre col-sm-12 my-2 `+choice_size+` text-center`);
+                        choice_div.parent().addClass(`col-sm-12 my-2 `+choice_size+` text-center`);
+                        choice_div.parent().css("box-shadow", "0 3px 3px 3px #acacac");
+                        choice_div.parent().css("border-radius", "5px 5px 0 0");
+                        choice_div.parent().css("padding-right", "calc(var(--bs-gutter-x)*-0.5)");
+                        choice_div.parent().css("padding-left", "calc(var(--bs-gutter-x)*-0.5)");
                         choice_div.parent().parent().addClass(`justify-content-around`);
                         // Création de la div au-dessus du bouton
                         var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
@@ -383,7 +387,7 @@ document.addEventListener("falcon-ready", function () {
                         // Ajout de la div au-dessus du bouton dans la div parent
                         choice_div.before(divAuDessus);
                         choice_div.addClass(`my-3`);
-                        choice_div.children().first().html(`Profitez de l'offre en 1C`);
+                        choice_div.children().first().html(`Je profite de l'offre en 1 clic`);
                         // Ajout de la div au-dessus du bouton dans la div parent
                         // Ajout du bouton dans la div parent
                         choices.push(choice_now);

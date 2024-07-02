@@ -372,15 +372,14 @@ document.addEventListener("falcon-ready", function () {
                         var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
                         var divAuDessus = $(`<div style="background-color: `+colorChoice+`; color: #ffffff;" class="py-4">
                             <p style="font-size: 16px;">OFFRE</p>
-                            <h3 class="text-uppercase">`+choice_now.duration(1)+`</h3>
+                            <h3 class="fs-4 text-uppercase">`+choice_now.duration(1)+`</h3>
                             <h2><strong>`+choice_now.starting_price+`<sup>€</sup></strong></h2>`+choice_now.offreSpeciale()+`
                             </div>
-                            <div class="mt-3 px-2">
+                            <div class="my-3 px-2">
                             <p style="font-size: 14px;color:#6e7882;">Renouvellement</p>
                             <p style="font-size: 16px;" class="mb-2">`+choice_now.printRenouvellement()+`</p>
                             <p style="font-size: 14px;color:#6e7882;">Cadeaux</p>
                             <p style="font-size: 16px;">Dossiers + Accès Portefeuille</p>
-                            </div>
                         `);
                         // Utilisez un opérateur ternaire pour incrémenter la variable appropriée en fonction du type
                         choice_now.paymentMethod === "sepa" ? nbchoiceSEPA++ : nbchoiceCC++;
@@ -393,10 +392,10 @@ document.addEventListener("falcon-ready", function () {
                         choices.push(choice_now);
 
                         if(choice_now.isFreeMonth()){
-                            choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez d'un mois gratuit puis serez débité de `+printPrice(choice_now.default_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p>`);
+                            choice_div.after(`<span style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez d'un mois gratuit puis serez débité de `+printPrice(choice_now.default_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p>`);
                         
                         }else{
-                            choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton vous débitera de `+printPrice(choice_now.starting_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p>`);
+                            choice_div.after(`<span style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton vous débitera de `+printPrice(choice_now.starting_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p>`);
                         }
                         
                         if((choice_now.isSepa() && sepa == "True") || choice_now.isSepa() == false && cc == "True"){
