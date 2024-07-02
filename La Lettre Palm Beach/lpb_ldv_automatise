@@ -330,7 +330,6 @@ document.addEventListener("falcon-ready", function () {
         const jsonUrl = `https://secure.la-lettre-palm-beach.com/${orderFormCode}/order-form/config.json`;
         // Effectuez la requête JSON
         console.log("jsonUrl: "+jsonUrl);
-        console.log("id_choice: "+id_choice);
         $.ajax({
             url: jsonUrl,
             dataType: 'json',
