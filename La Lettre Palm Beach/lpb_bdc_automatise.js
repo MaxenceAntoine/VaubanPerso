@@ -518,6 +518,8 @@ document.addEventListener("vanguard-ready", function () {
         changeRecapitulatif(choiceSelected);
     });
 
+    $('#items-choices').removeClass('list-group');
+    $('#items-choices').addClass('row');
     customizeChoices(choices);
     addEventOnChoice(choices);
     changeRecapitulatif(choices[0]);
