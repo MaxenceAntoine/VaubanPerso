@@ -372,7 +372,7 @@ document.addEventListener("falcon-ready", function () {
                         var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
                         var divAuDessus = $(`<div style="background-color: `+colorChoice+`; color: #ffffff;" class="py-4">
                             <p style="font-size: 16px;">OFFRE</p>
-                            <h3 class="text-uppercase">`+choice_now.duration(1)+`</h3>
+                            <h3 class="fs-4 text-uppercase">`+choice_now.duration(1)+`</h3>
                             <h2><strong>`+choice_now.starting_price+`<sup>€</sup></strong></h2>`+choice_now.offreSpeciale()+`
                             </div>
                             <div class="mt-3 px-2">
@@ -398,6 +398,7 @@ document.addEventListener("falcon-ready", function () {
                         }else{
                             choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton vous débitera de `+printPrice(choice_now.starting_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p>`);
                         }
+                        choice_div.wrap('<div class="px-2 my-3 "></div>');
                         if((choice_now.isSepa() && sepa == "True") || choice_now.isSepa() == false && cc == "True"){
                             $(".bloc_recap").append(choice_now.printRecapitulatif());
                         }
