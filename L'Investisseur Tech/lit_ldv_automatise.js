@@ -184,7 +184,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     * Fonction qui retourne le libélé du moyen de paiement
     **/
     Choice.prototype.offreSpeciale = function () {
-        if (this.starting_price_duration != this.renewal_term_length) {
+        if (this.starting_price_duration != this.renewal_term_length || this.isFreeMonth()) {
             if(this.starting_price_duration == 1){
                 return "<p>le premier mois</p>";
             }
@@ -391,8 +391,13 @@ document.addEventListener("falcon-ready", function () {
                         choices.push(choice_now);
 
                         if(choice_now.isFreeMonth()){
-                            choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez d'un mois gratuit puis serez débité de `+printPrice(choice_now.default_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p></div>`);
-                        
+                            if(choice_now.starting_price_duration == 1){
+                                choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez d'un mois gratuit puis serez débité de `+printPrice(choice_now.default_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p></div>`);
+
+                            }else{
+                                choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez de `+choice_now.starting_price_duration+` mois gratuits puis serez débité de `+printPrice(choice_now.default_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p></div>`);
+
+                            }
                         }else{
                             choice_div.after(`<div class="mb-2 px-2"  style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton vous débitera de `+printPrice(choice_now.starting_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p></div>`);
                         }
