@@ -307,11 +307,13 @@ document.addEventListener("falcon-ready", function () {
     if (sepa == "True" || cc == "True") {
         $('.bdc').addClass("d-none");
         $('.sepa-or-cc').removeClass("d-none");
+        $('.sepa-or-cc').removeClass("d-none-editor");
         console.log("$('.bdc').addClass();")
     }
     else {
         $('.sepa-or-cc').addClass("d-none");
         $('.bdc').removeClass("d-none");
+        $('.bdc').removeClass("d-none-editor");
         console.log("$('.sepa-or-cc').addClass();")
     }
     // Créez un tableau vide pour stocker les données JSON
