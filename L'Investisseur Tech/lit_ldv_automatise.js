@@ -190,6 +190,11 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             }
             else if(this.starting_price_duration == 12){
                 return "<p>la première année</p>";
+            }
+            else if(this.starting_price_duration == 24){
+                return "<p>les deux premières années</p>";
+            }else if(this.starting_price_duration == 36){
+                return "<p>les trois premières années</p>";
             }else{
                 return "<p>les "+this.starting_price_duration+" premiers mois</p>";
 
@@ -333,8 +338,8 @@ document.addEventListener("falcon-ready", function () {
         // Créez l'URL pour la requête JSON en utilisant la valeur de "orderFormCode"
         const jsonUrl = `https://secure.vauban-editions.com/${orderFormCode}/order-form/config.json`;
         // Effectuez la requête JSON
-        console.log("jsonUrl: "+jsonUrl);
-        console.log("id_choice: "+id_choice);
+        //console.log("jsonUrl: "+jsonUrl);
+        //console.log("id_choice: "+id_choice);
         $.ajax({
             url: jsonUrl,
             dataType: 'json',
@@ -373,6 +378,7 @@ document.addEventListener("falcon-ready", function () {
                         choice_div.parent().parent().addClass(`justify-content-around`);
                         // Création de la div au-dessus du bouton
                         var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
+                        console.log()
                         var divAuDessus = $(`<div style="background-color: `+colorChoice+`; color: #ffffff;" class="py-4">
                             <p style="font-size: 16px;">OFFRE</p>
                             <h3 class="fs-4 text-uppercase">`+choice_now.duration(1)+`</h3>
