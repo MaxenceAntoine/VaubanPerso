@@ -95,8 +95,11 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         if (this.isLife()) {
             return "à vie";
         }
-        else {
+        else if (this.isFreeMonth()){
             return convertToDuration(this.renewal_term_length, genre);
+        }
+        else {
+            return convertToDuration(this.starting_price_duration, genre);
         }
     };
 
@@ -184,7 +187,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     * Fonction qui retourne le libélé du moyen de paiement
     **/
     Choice.prototype.offreSpeciale = function () {
-        if (this.starting_price_duration != this.renewal_term_length) {
+        if (this.starting_price_duration != this.renewal_term_length && this.isFreeMonth()) {
             if(this.starting_price_duration == 1){
                 return "<p>le premier mois</p>";
             }
