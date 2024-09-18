@@ -221,7 +221,6 @@ function convertToDuration(number, genre = 0) {
     break;
     case 2:
     genre == 0 ? duration = 'bimensuel' : duration = 'bimensuele';
-    duration = 'bimensuel';
     break;
     case 3:
     genre == 0 ? duration = 'trimestriel' : duration = 'trimestrielle';
@@ -233,10 +232,10 @@ function convertToDuration(number, genre = 0) {
     genre == 0 ? duration = 'annuel' : duration = 'annuelle';
     break;
     case 24:
-    genre == 0 ? duration = 'biennal' : duration = 'biennalle';
+    duration = 'de 2 ans';
     break;
     case 36:
-    genre == 0 ? duration = 'de 3 ans' : duration = 'de 3 ans';
+    duration = 'de 3 ans';
     break;
     default:
     duration = 'durée inconnue';
