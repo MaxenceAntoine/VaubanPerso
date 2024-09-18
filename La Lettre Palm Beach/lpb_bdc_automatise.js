@@ -305,7 +305,7 @@ function convertToDuration(number, genre = 0) {
             genre == 0 ? duration = 'annuel' : duration = 'annuelle';
             break;
         case 24:
-            genre == 0 ? duration = 'biennal' : duration = 'biennalle';
+            genre == 0 ? duration = '2 ans' : duration = '2 ans';
             break;
         case 36:
             genre == 0 ? duration = '3 ans' : duration = '3 ans';
