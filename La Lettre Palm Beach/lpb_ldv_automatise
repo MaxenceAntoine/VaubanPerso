@@ -221,6 +221,7 @@ function convertToDuration(number, genre = 0) {
     break;
     case 2:
     genre == 0 ? duration = 'bimensuel' : duration = 'bimensuele';
+    duration = 'bimensuel';
     break;
     case 3:
     genre == 0 ? duration = 'trimestriel' : duration = 'trimestrielle';
@@ -310,13 +311,13 @@ document.addEventListener("falcon-ready", function () {
         $('.bdc').addClass("d-none");
         $('.sepa-or-cc').removeClass("d-none");
         $('.sepa-or-cc').removeClass("d-none-editor");
-        console.log("sepa ou cc");
+        console.log("$('.bdc').addClass();")
     }
     else {
         $('.sepa-or-cc').addClass("d-none");
         $('.bdc').removeClass("d-none");
         $('.bdc').removeClass("d-none-editor");
-        console.log("bdc");
+        console.log("$('.sepa-or-cc').addClass();")
     }
     // Créez un tableau vide pour stocker les données JSON
     var choices = [];
