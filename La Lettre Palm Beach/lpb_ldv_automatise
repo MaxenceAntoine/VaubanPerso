@@ -306,17 +306,18 @@ document.addEventListener("falcon-ready", function () {
     //recherche des paramètres du lien
     let sepa = search_params.get('1c_sepa');
     let cc = search_params.get('1c_cc');
+    
     if (sepa == "True" || cc == "True") {
         $('.bdc').addClass("d-none");
         $('.sepa-or-cc').removeClass("d-none");
         $('.sepa-or-cc').removeClass("d-none-editor");
-        console.log("$('.bdc').addClass();")
+        console.log("sepa ou cc")
     }
     else {
         $('.sepa-or-cc').addClass("d-none");
         $('.bdc').removeClass("d-none");
         $('.bdc').removeClass("d-none-editor");
-        console.log("$('.sepa-or-cc').addClass();")
+        console.log("bdc")
     }
     // Créez un tableau vide pour stocker les données JSON
     var choices = [];
