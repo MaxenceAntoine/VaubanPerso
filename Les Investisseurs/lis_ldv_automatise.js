@@ -315,9 +315,12 @@ document.addEventListener("falcon-ready", function () {
     // Créez un tableau vide pour stocker les données JSON
     var choices = [];
     var colorChoice = ["red","green","blue"];
+    var cadeau = "Dossiers + Accès Portefeuille"
     var nbchoiceSEPA = 0;
     var nbchoiceCC = 0;
-    console.log("TEST");
+    if (config.cadeau == undefined) {
+        cadeau = config.cadeau;
+    }
     // Crée un tableau vide pour les choices
     // Sélectionnez tous les boutons avec l'attribut "data-type" égal à "direct"
     const boutonsDirect = $('[data-type-link="1c_sepa-or-1c_cc"]');
@@ -379,7 +382,7 @@ document.addEventListener("falcon-ready", function () {
                             <p style="font-size: 14px;color:#6e7882;">Renouvellement</p>
                             <p style="font-size: 16px;" class="mb-2">`+choice_now.printRenouvellement()+`</p>
                             <p style="font-size: 14px;color:#6e7882;">Cadeaux</p>
-                            <p style="font-size: 16px;">Dossiers + Accès Portefeuille</p>
+                            <p style="font-size: 16px;">`+cadeau+`</p>
                             </div>
                         `);
                         // Utilisez un opérateur ternaire pour incrémenter la variable appropriée en fonction du type
