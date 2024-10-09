@@ -318,7 +318,7 @@ document.addEventListener("falcon-ready", function () {
     var cadeau = "Dossiers + Accès Portefeuille"
     var nbchoiceSEPA = 0;
     var nbchoiceCC = 0;
-    if (config.cadeau == undefined) {
+    if (config.cadeau != undefined) {
         cadeau = config.cadeau;
     }
     // Crée un tableau vide pour les choices
