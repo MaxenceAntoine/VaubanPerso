@@ -327,6 +327,7 @@ document.addEventListener("falcon-ready", function () {
     // Créez un tableau vide pour stocker les données JSON
     var choices = [];
     var colorChoice = ["red","green","blue"];
+    var idChoiceRecap = [];
     var nbchoiceSEPA = 0;
     var nbchoiceCC = 0;
     // Crée un tableau vide pour les choices
