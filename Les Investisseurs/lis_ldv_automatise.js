@@ -172,11 +172,10 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         var affichage = "";
         if (this.isLife()) {
             //Dans le cas d'une offre à vie 
-            return "Frais de maintenance à " + this
-            .default_price + "&nbsp;€ par " + convertToDurationBis(this.renewal_term_length);
+            return "Frais de maintenance à " + printPrice(this.default_price) + " par " + convertToDurationBis(this.renewal_term_length);
         }
         else {
-            return "Renouvellement " + convertToDuration(this.renewal_term_length) + " automatique à " + this.default_price + "&nbsp;€";
+            return "Renouvellement " + convertToDuration(this.renewal_term_length) + " automatique à " + printPrice(this.default_price);
         }
     };
 
