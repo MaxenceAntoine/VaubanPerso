@@ -318,6 +318,7 @@ document.addEventListener("falcon-ready", function () {
     // Créez un tableau vide pour stocker les données JSON
     var choices = [];
     var colorChoice = ["red","green","blue"];
+    var idChoiceRecap = [];
     var cadeau = "Dossiers + Accès Portefeuille"
     var nbchoiceSEPA = 0;
     var nbchoiceCC = 0;
@@ -406,7 +407,12 @@ document.addEventListener("falcon-ready", function () {
                         }
                         choice_div.wrap('<div class="px-2 my-3 "></div>');
                         if((choice_now.isSepa() && sepa == "True") || choice_now.isSepa() == false && cc == "True"){
-                            $(".bloc_recap").append(choice_now.printRecapitulatif());
+                            // Vérifie si l'ID de Choice n'est pas déjà dans le tableau
+                            if (!idChoiceRecap.includes(choice_now.id)) {
+                                // Ajoute l'ID au tableau
+                                idChoiceRecap.push(choice_now.id);
+                                $(".bloc_recap").append(choice_now.printRecapitulatif());
+                            }
                         }
                     }
                 });
