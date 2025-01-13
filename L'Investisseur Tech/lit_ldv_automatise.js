@@ -306,9 +306,13 @@ function getDataId($element) {
     }
 }
 document.addEventListener("falcon-ready", function () {
+
+    console.log("Je commence le script automatique");
     let urlArrivee = new URL(window.location.href);
     //création d'une nouvelle variable de l'url de la page
     let search_params = urlArrivee.searchParams;
+
+    console.log("J'ai récupéré les paramètres");
     //recherche des paramètres du lien
     let sepa = search_params.get('1c_sepa');
     let cc = search_params.get('1c_cc');
@@ -324,6 +328,8 @@ document.addEventListener("falcon-ready", function () {
         $('.bdc').removeClass("d-none-editor");
         console.log("$('.sepa-or-cc').addClass();")
     }
+
+    console.log("J'ai appliqué les modifications en fonction du SEPA CC");
     // Créez un tableau vide pour stocker les données JSON
     var choices = [];
     var colorChoice = ["red","green","blue"];
@@ -333,17 +339,21 @@ document.addEventListener("falcon-ready", function () {
     // Crée un tableau vide pour les choices
     // Sélectionnez tous les boutons avec l'attribut "data-type" égal à "direct"
     const boutonsDirect = $('[data-type-link="1c_sepa-or-1c_cc"]');
+
+    console.log("J'ai récupéré tout les bouttons");
     // Parcourez la liste des boutons direct
     boutonsDirect.each(function() {
+
+        console.log("Je commence le script sur le boutton ");
         // Récupérez la valeur de l'attribut "data-order-form-code" de chaque bouton
         const choice_div = $(this);
         const orderFormCode = $(this).attr('data-order-form-code');
         var id_choice = getDataId($(this));
+
+        console.log("Boutton : " + id_choice);
         // Créez l'URL pour la requête JSON en utilisant la valeur de "orderFormCode"
         const jsonUrl = `https://secure.vauban-editions.com/${orderFormCode}/order-form/config.json`;
         // Effectuez la requête JSON
-        //console.log("jsonUrl: "+jsonUrl);
-        //console.log("id_choice: "+id_choice);
         $.ajax({
             url: jsonUrl,
             dataType: 'json',
