@@ -165,7 +165,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         return ` <h4 class="text-uppercase" >OFFRE ` + this.startDuration(1) + `</h4>
                   <p>OUI, je m’inscris à ` + config_bdc.publication +
             ` avec ` + config_bdc.auteur +
-            ` et bénéficie de l’offre exceptionnelle d'abonnement ` + (this.isFreeMonth() === False ? this
+            ` et bénéficie de l’offre exceptionnelle d'abonnement ` + (!this.isFreeMonth() ? this
             .startDuration() +
             ` à ` + this.starting_price.toLocaleString("fr-FR", {
         style: "currency",
