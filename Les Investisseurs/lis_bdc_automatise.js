@@ -165,13 +165,13 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         return ` <h4 class="text-uppercase" >OFFRE ` + this.startDuration(1) + `</h4>
                   <p>OUI, je m’inscris à ` + config_bdc.publication +
             ` avec ` + config_bdc.auteur +
-            ` et bénéficie de l’offre exceptionnelle d'abonnement ` + this
+            ` et bénéficie de l’offre exceptionnelle d'abonnement ` + (this.isFreeMonth() === False ? this
             .startDuration() +
             ` à ` + this.starting_price.toLocaleString("fr-FR", {
         style: "currency",
         currency: "EUR"
     }) + ` par ` + this
-            .printMoyenPaiement() + this.retractationDelay() + `.</p>
+            .printMoyenPaiement() + this.retractationDelay() + `.` : `.`)  + `</p>
 
                   <p>Je comprends que cette offre spéciale me permet de bénéficier des analyses uniques de ` +
             config_bdc.auteur +
