@@ -186,15 +186,11 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      * Fonction qui retourne l'affichage du récapitulatif
      **/
     Choice.prototype.printRecapitulatif = function () {
-
-
         return ` <h4 class="text-uppercase" >OFFRE ` + this.startDuration(1) + `</h4>
                     <p>OUI, je m’inscris à ` + config_bdc.publication +
             ` avec ` + config_bdc.auteur +
-            ` et bénéficie de l’offre exceptionnelle d'abonnement ` + this
-            .startDuration() +
-            ` à ` + this.starting_price + `&nbsp;€ par ` + this
-            .printMoyenPaiement() + `.</p>
+            ` et bénéficie de l’offre exceptionnelle d'abonnement ` + (this.choice.isFreeMonth() === False ? this.startDuration() +
+            ` à ` + this.starting_price + `&nbsp;€ par ` + this.printMoyenPaiement() + `.` : `.`) +`</p>
 
                     <p>Je comprends que cette offre spéciale me permet de bénéficier des analyses uniques de ` +
             config_bdc.auteur +
