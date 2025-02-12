@@ -166,7 +166,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
                   <p>OUI, je m’inscris à ` + config_bdc.publication +
             ` avec ` + config_bdc.auteur +
             ` et bénéficie de l’offre exceptionnelle d'abonnement ` +this
-            .startDuration() + (!this.isFreeMonth() ?  +
+            .startDuration() + (!this.isFreeMonth() ?
             ` à ` + this.starting_price.toLocaleString("fr-FR", {
         style: "currency",
         currency: "EUR"
