@@ -157,13 +157,11 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     Choice.prototype.printRecapitulatif = function () {
         return `<h4 class="text-uppercase">Offre `+this.startDuration(1)+`</h4>
         <div style="font-size: 12px;color:#3b4147;" class="mb-4">
-        <p>Je comprends que cette offre spéciale me permet de bénéficier des éditions mensuelles et dossiers cadeaux. De plus, je reçois toutes les alertes par email ainsi que mon accès au portefeuille-modèle en ligne. Je souscris à un abonnement `+this.startDuration()+ (!this.isFreeMonth() ?
-        ` à ` + this.starting_price.toLocaleString("fr-FR", {
-    style: "currency",
-    currency: "EUR"
-}) + `au tarif de `+ this.starting_price.toLocaleString("fr-FR", {
+        <p>Je comprends que cette offre spéciale me permet de bénéficier des éditions mensuelles et dossiers cadeaux. De plus, je reçois toutes les alertes par email ainsi que mon accès au portefeuille-modèle en ligne. Je souscris à un abonnement `+this.startDuration()+ 
+        (!this.isFreeMonth() ? `au tarif de `+ this.starting_price.toLocaleString("fr-FR", {
         style: "currency",currency: "EUR"}
-        )+` TTC.</p>` : `.</p>`)+ 
+        )+` TTC.</p>` 
+        : `.</p>`)+ 
         `<p>Renouvellement automatique : vous serez débité de `+this.default_price.toLocaleString("fr-FR", {
         style: "currency",currency: "EUR"}
                                                                                     )+` par ` + convertToDurationBis(this.renewal_term_length) + ` avec votre ` + this.printMoyenPaiement() + `. Dans le but de vous offrir une qualité de service sans interruption, vous bénéficiez d'un renouvellement automatique de votre abonnement. Vous pouvez demander le non renouvellement de celui-ci par simple demande via notre formulaire de contact.</p></div>`
