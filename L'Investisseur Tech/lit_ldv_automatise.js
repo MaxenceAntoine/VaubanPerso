@@ -357,7 +357,7 @@ document.addEventListener("falcon-ready", function () {
       
       // Utilisation :
       waitForChoices().then((choices) => {
-        console.log("La variable est prête :", choices);
+        console.log("La variable est prête V2 :", choices);
         boutonsDirect.each(function() {
 
             console.log("Je commence le script sur le boutton ");
