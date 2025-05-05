@@ -356,8 +356,8 @@ document.addEventListener("falcon-ready", function () {
       };
       
       // Utilisation :
-      waitForChoices().then((choices) => {
-        console.log("La variable est prête V2 :", choices);
+      waitForChoices().then((choices_ldv) => {
+        console.log("La variable est prête V2 :", choices_ldv);
         boutonsDirect.each(function() {
 
             console.log("Je commence le script sur le boutton ");
@@ -371,7 +371,7 @@ document.addEventListener("falcon-ready", function () {
             // Effectuez la requête JSON
                     // Ajoutez les données JSON au tableau
                     var choice_size = "col-md-12";
-                    switch (choices.length) {
+                    switch (choices_ldv.length) {
                     case 2:
                     choice_size = "col-md-5";
                     break;
@@ -385,7 +385,7 @@ document.addEventListener("falcon-ready", function () {
                     choice_size = "col-md-12";
                     break;
                     }
-                    choices.forEach(function (choice, index) {
+                    choices_ldv.forEach(function (choice, index) {
                         if(choice.id == id_choice){
                             var choice_now = new Choice(choice.id, index + 1, choice.stackLetter, choice.paymentMethod,
                                                         choice.startingPriceDuration,
