@@ -352,15 +352,11 @@ document.addEventListener("falcon-ready", function () {
 
         console.log("Boutton : " + id_choice);
         // Créez l'URL pour la requête JSON en utilisant la valeur de "orderFormCode"
-        const jsonUrl = `https://secure.vauban-editions.com/${orderFormCode}/order-form/config.json`;
+        //const jsonUrl = `https://secure.vauban-editions.com/${orderFormCode}/order-form/config.json`;
         // Effectuez la requête JSON
-        $.ajax({
-            url: jsonUrl,
-            dataType: 'json',
-            success: function(data) {
                 // Ajoutez les données JSON au tableau
                 var choice_size = "col-md-12";
-                switch (data.choices.length) {
+                switch (campaign.config.choices.length) {
                 case 2:
                 choice_size = "col-md-5";
                 break;
@@ -374,7 +370,7 @@ document.addEventListener("falcon-ready", function () {
                 choice_size = "col-md-12";
                 break;
                 }
-                data.choices.forEach(function (choice, index) {
+                campaign.config.choices.forEach(function (choice, index) {
                     if(choice.id == id_choice){
                         var choice_now = new Choice(choice.id, index + 1, choice.stackLetter, choice.paymentMethod,
                                                     choice.startingPriceDuration,
@@ -439,13 +435,7 @@ document.addEventListener("falcon-ready", function () {
                 });
                 window.choices_window = choices;
                 // Utilisez la méthode .parent() pour récupérer la div parent
-            },error: function(xhr, status, error) {
-                // Gestion des erreurs ici
-                console.error(status, error);
-            }
-        });
-    }
-            );
+    });
     $(".bloc_recap").after(`<p style="font-size: 12px;">
     Vous ne souhaitez pas payer en 1 clic et préférez renseigner vos coordonnées de paiement ? 
     <a class="btn-order-form-button" href="">Cliquez ici pour accéder au bon de commande</a>
