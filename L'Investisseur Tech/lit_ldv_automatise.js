@@ -357,7 +357,9 @@ document.addEventListener("falcon-ready", function () {
       
       // Utilisation :
       waitForChoices().then((choices_ldv) => {
-        console.log("La variable est prête V2 :", choices_ldv);
+        console.log("La variable est prête V3 :", choices_ldv);
+        lien_bdc = journey.config.vanguardHost+"/"+campaign.config.offerCode+"/order-form/index.html?trackingCode="+campaign.config.defaultSourceCode
+        console.log("lien BDC : " + lien_bdc);
         boutonsDirect.each(function() {
 
             console.log("Je commence le script sur le boutton ");
@@ -451,9 +453,11 @@ document.addEventListener("falcon-ready", function () {
                     window.choices_window = choices;
                     // Utilisez la méthode .parent() pour récupérer la div parent
         });
+
+
         $(".bloc_recap").after(`<p style="font-size: 12px;">
         Vous ne souhaitez pas payer en 1 clic et préférez renseigner vos coordonnées de paiement ? 
-        <a class="btn-order-form-button" href="">Cliquez ici pour accéder au bon de commande</a>
+        <a class="btn-order-form-button" href="`+lien_bdc+`">Cliquez ici pour accéder au bon de commande</a>
         </p>
         <p style="font-size: 12px;">
         En cliquant ci-dessus, je confirme ma commande et j'accepte les <a href="https://www.vauban-editions.com/cgv" target="”_blank”">conditions générales de vente</a>.
