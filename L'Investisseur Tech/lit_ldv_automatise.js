@@ -358,107 +358,108 @@ document.addEventListener("falcon-ready", function () {
       // Utilisation :
       waitForChoices().then((choices) => {
         console.log("La variable est prête :", choices);
+        boutonsDirect.each(function() {
+
+            console.log("Je commence le script sur le boutton ");
+            // Récupérez la valeur de l'attribut "data-order-form-code" de chaque bouton
+            const choice_div = $(this);
+            const orderFormCode = $(this).attr('data-order-form-code');
+            var id_choice = getDataId($(this));
+    
+            // Créez l'URL pour la requête JSON en utilisant la valeur de "orderFormCode"
+            //const jsonUrl = `https://secure.vauban-editions.com/${orderFormCode}/order-form/config.json`;
+            // Effectuez la requête JSON
+                    // Ajoutez les données JSON au tableau
+                    var choice_size = "col-md-12";
+                    switch (choices.length) {
+                    case 2:
+                    choice_size = "col-md-5";
+                    break;
+                    case 4:
+                    choice_size = "col-md-5";
+                    break;
+                    case 6:
+                    choice_size = "col-md-3";
+                    break;
+                    default:
+                    choice_size = "col-md-12";
+                    break;
+                    }
+                    choices.forEach(function (choice, index) {
+                        if(choice.id == id_choice){
+                            var choice_now = new Choice(choice.id, index + 1, choice.stackLetter, choice.paymentMethod,
+                                                        choice.startingPriceDuration,
+                                                        choice.renewalTermLength, choice.startingPrice, choice.defaultPrice, choice
+                                                        .isBcl, choice.customHtml);
+                            // Création de la div parent
+                            //var divChoice = $(`<div class="block-offre col-sm-12 my-2 `+choice_size+` text-center"></div>`);
+                            //choice_div.wrap(divChoice);
+                            choice_div.parent().removeClass();
+                            choice_div.parent().addClass(`col-sm-12 my-2 `+choice_size+` text-center`);
+                            choice_div.parent().css("box-shadow", "0 3px 3px 3px #acacac");
+                            choice_div.parent().css("border-radius", "5px 5px 0 0");
+                            choice_div.parent().css("padding-right", "calc(var(--bs-gutter-x)*-0.5)");
+                            choice_div.parent().css("padding-left", "calc(var(--bs-gutter-x)*-0.5)");
+                            choice_div.parent().parent().addClass(`justify-content-around`);
+                            // Création de la div au-dessus du bouton
+                            var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
+                            var divAuDessus = $(`<div style="background-color: `+colorChoice+`; color: #ffffff;" class="py-4">
+                                <p style="font-size: 16px;">OFFRE</p>
+                                <h3 class="fs-4 text-uppercase">`+choice_now.duration(1)+`</h3>
+                                <h2><strong>`+choice_now.starting_price+`<sup>€</sup></strong></h2>`+choice_now.offreSpeciale()+`
+                                </div>
+                                <div class="my-3 px-2">
+                                <p style="font-size: 14px;color:#6e7882;">Renouvellement</p>
+                                <p style="font-size: 16px;" class="mb-2">`+choice_now.printRenouvellement()+`</p>
+                                <p style="font-size: 14px;color:#6e7882;">Cadeaux</p>
+                                <p style="font-size: 16px;">Dossiers + Accès Portefeuille</p>
+                                </div>
+                            `);
+                            // Utilisez un opérateur ternaire pour incrémenter la variable appropriée en fonction du type
+                            choice_now.paymentMethod === "sepa" ? nbchoiceSEPA++ : nbchoiceCC++;
+                            // Ajout de la div au-dessus du bouton dans la div parent
+                            choice_div.before(divAuDessus);
+                            choice_div.children().first().html(`Je profite de l'offre en 1 clic`);
+                            // Ajout de la div au-dessus du bouton dans la div parent
+                            // Ajout du bouton dans la div parent
+                            choices.push(choice_now);
+    
+                            if(choice_now.isFreeMonth()){
+                                if(choice_now.starting_price_duration == 1){
+                                    choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez d'un mois gratuit puis serez débité de `+printPrice(choice_now.default_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p></div>`);
+    
+                                }else{
+                                    choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez de `+choice_now.starting_price_duration+` mois gratuits puis serez débité de `+printPrice(choice_now.default_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p></div>`);
+    
+                                }
+                            }else{
+                                choice_div.after(`<div class="mb-2 px-2"  style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton vous débitera de `+printPrice(choice_now.starting_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p></div>`);
+                            }
+    
+                            choice_div.wrap('<div class="px-2 my-3 "></div>');
+                            
+                            if((choice_now.isSepa() && sepa == "True") || choice_now.isSepa() == false && cc == "True"){
+                                // Vérifie si l'ID de Choice n'est pas déjà dans le tableau
+                                if (!idChoiceRecap.includes(choice_now.id)) {
+                                    // Ajoute l'ID au tableau
+                                    idChoiceRecap.push(choice_now.id);
+                                    $(".bloc_recap").append(choice_now.printRecapitulatif());
+                                }
+                            }
+                        }
+                    });
+                    window.choices_window = choices;
+                    // Utilisez la méthode .parent() pour récupérer la div parent
+        });
+        $(".bloc_recap").after(`<p style="font-size: 12px;">
+        Vous ne souhaitez pas payer en 1 clic et préférez renseigner vos coordonnées de paiement ? 
+        <a class="btn-order-form-button" href="">Cliquez ici pour accéder au bon de commande</a>
+        </p>
+        <p style="font-size: 12px;">
+        En cliquant ci-dessus, je confirme ma commande et j'accepte les <a href="https://www.vauban-editions.com/cgv" target="”_blank”">conditions générales de vente</a>.
+        </p>`);
       });
 
       
-    /**boutonsDirect.each(function() {
-
-        console.log("Je commence le script sur le boutton ");
-        // Récupérez la valeur de l'attribut "data-order-form-code" de chaque bouton
-        const choice_div = $(this);
-        const orderFormCode = $(this).attr('data-order-form-code');
-        var id_choice = getDataId($(this));
-
-        // Créez l'URL pour la requête JSON en utilisant la valeur de "orderFormCode"
-        //const jsonUrl = `https://secure.vauban-editions.com/${orderFormCode}/order-form/config.json`;
-        // Effectuez la requête JSON
-                // Ajoutez les données JSON au tableau
-                var choice_size = "col-md-12";
-                switch (campaign.config.choices.length) {
-                case 2:
-                choice_size = "col-md-5";
-                break;
-                case 4:
-                choice_size = "col-md-5";
-                break;
-                case 6:
-                choice_size = "col-md-3";
-                break;
-                default:
-                choice_size = "col-md-12";
-                break;
-                }
-                campaign.config.choices.forEach(function (choice, index) {
-                    if(choice.id == id_choice){
-                        var choice_now = new Choice(choice.id, index + 1, choice.stackLetter, choice.paymentMethod,
-                                                    choice.startingPriceDuration,
-                                                    choice.renewalTermLength, choice.startingPrice, choice.defaultPrice, choice
-                                                    .isBcl, choice.customHtml);
-                        // Création de la div parent
-                        //var divChoice = $(`<div class="block-offre col-sm-12 my-2 `+choice_size+` text-center"></div>`);
-                        //choice_div.wrap(divChoice);
-                        choice_div.parent().removeClass();
-                        choice_div.parent().addClass(`col-sm-12 my-2 `+choice_size+` text-center`);
-                        choice_div.parent().css("box-shadow", "0 3px 3px 3px #acacac");
-                        choice_div.parent().css("border-radius", "5px 5px 0 0");
-                        choice_div.parent().css("padding-right", "calc(var(--bs-gutter-x)*-0.5)");
-                        choice_div.parent().css("padding-left", "calc(var(--bs-gutter-x)*-0.5)");
-                        choice_div.parent().parent().addClass(`justify-content-around`);
-                        // Création de la div au-dessus du bouton
-                        var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
-                        var divAuDessus = $(`<div style="background-color: `+colorChoice+`; color: #ffffff;" class="py-4">
-                            <p style="font-size: 16px;">OFFRE</p>
-                            <h3 class="fs-4 text-uppercase">`+choice_now.duration(1)+`</h3>
-                            <h2><strong>`+choice_now.starting_price+`<sup>€</sup></strong></h2>`+choice_now.offreSpeciale()+`
-                            </div>
-                            <div class="my-3 px-2">
-                            <p style="font-size: 14px;color:#6e7882;">Renouvellement</p>
-                            <p style="font-size: 16px;" class="mb-2">`+choice_now.printRenouvellement()+`</p>
-                            <p style="font-size: 14px;color:#6e7882;">Cadeaux</p>
-                            <p style="font-size: 16px;">Dossiers + Accès Portefeuille</p>
-                            </div>
-                        `);
-                        // Utilisez un opérateur ternaire pour incrémenter la variable appropriée en fonction du type
-                        choice_now.paymentMethod === "sepa" ? nbchoiceSEPA++ : nbchoiceCC++;
-                        // Ajout de la div au-dessus du bouton dans la div parent
-                        choice_div.before(divAuDessus);
-                        choice_div.children().first().html(`Je profite de l'offre en 1 clic`);
-                        // Ajout de la div au-dessus du bouton dans la div parent
-                        // Ajout du bouton dans la div parent
-                        choices.push(choice_now);
-
-                        if(choice_now.isFreeMonth()){
-                            if(choice_now.starting_price_duration == 1){
-                                choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez d'un mois gratuit puis serez débité de `+printPrice(choice_now.default_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p></div>`);
-
-                            }else{
-                                choice_div.after(`<div class="mb-2 px-2" style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton valide votre commande, vous profitez de `+choice_now.starting_price_duration+` mois gratuits puis serez débité de `+printPrice(choice_now.default_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p></div>`);
-
-                            }
-                        }else{
-                            choice_div.after(`<div class="mb-2 px-2"  style="color: rgb(184, 49, 47); font-size: 12px;"><p>Attention : paiement en 1clic.</p><p>Cliquer sur le bouton vous débitera de `+printPrice(choice_now.starting_price)+` grâce à votre `+choice_now.printMoyenPaiement()+`</p></div>`);
-                        }
-
-                        choice_div.wrap('<div class="px-2 my-3 "></div>');
-                        
-                        if((choice_now.isSepa() && sepa == "True") || choice_now.isSepa() == false && cc == "True"){
-                            // Vérifie si l'ID de Choice n'est pas déjà dans le tableau
-                            if (!idChoiceRecap.includes(choice_now.id)) {
-                                // Ajoute l'ID au tableau
-                                idChoiceRecap.push(choice_now.id);
-                                $(".bloc_recap").append(choice_now.printRecapitulatif());
-                            }
-                        }
-                    }
-                });
-                window.choices_window = choices;
-                // Utilisez la méthode .parent() pour récupérer la div parent
-    });
-    $(".bloc_recap").after(`<p style="font-size: 12px;">
-    Vous ne souhaitez pas payer en 1 clic et préférez renseigner vos coordonnées de paiement ? 
-    <a class="btn-order-form-button" href="">Cliquez ici pour accéder au bon de commande</a>
-    </p>
-    <p style="font-size: 12px;">
-    En cliquant ci-dessus, je confirme ma commande et j'accepte les <a href="https://www.vauban-editions.com/cgv" target="”_blank”">conditions générales de vente</a>.
-    </p>`);**/
+    /****/
 });
