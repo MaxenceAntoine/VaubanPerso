@@ -307,12 +307,10 @@ function getDataId($element) {
 }
 document.addEventListener("falcon-ready", function () {
 
-    console.log("Je commence le script automatique");
     let urlArrivee = new URL(window.location.href);
     //création d'une nouvelle variable de l'url de la page
     let search_params = urlArrivee.searchParams;
 
-    console.log("J'ai récupéré les paramètres");
     //recherche des paramètres du lien
     let sepa = search_params.get('1c_sepa');
     let cc = search_params.get('1c_cc');
@@ -326,10 +324,8 @@ document.addEventListener("falcon-ready", function () {
         $('.sepa-or-cc').addClass("d-none");
         $('.bdc').removeClass("d-none");
         $('.bdc').removeClass("d-none-editor");
-        console.log("$('.sepa-or-cc').addClass();")
     }
 
-    console.log("J'ai appliqué les modifications en fonction du SEPA CC");
     // Créez un tableau vide pour stocker les données JSON
     var choices = [];
     var colorChoice = ["red","green","blue"];
@@ -342,7 +338,30 @@ document.addEventListener("falcon-ready", function () {
 
     console.log("J'ai récupéré tout les bouttons");
     // Parcourez la liste des boutons direct
-    boutonsDirect.each(function() {
+
+    const waitForChoices = () => {
+        return new Promise((resolve) => {
+          const checkInterval = setInterval(() => {
+            if (
+              typeof campaign !== "undefined" &&
+              campaign.config &&
+              Array.isArray(campaign.config.choices) &&
+              campaign.config.choices.length > 0
+            ) {
+              clearInterval(checkInterval);
+              resolve(campaign.config.choices);
+            }
+          }, 100); // vérifie toutes les 100ms
+        });
+      };
+      
+      // Utilisation :
+      waitForChoices().then((choices) => {
+        console.log("La variable est prête :", choices);
+      });
+
+      
+    /**boutonsDirect.each(function() {
 
         console.log("Je commence le script sur le boutton ");
         // Récupérez la valeur de l'attribut "data-order-form-code" de chaque bouton
@@ -350,7 +369,6 @@ document.addEventListener("falcon-ready", function () {
         const orderFormCode = $(this).attr('data-order-form-code');
         var id_choice = getDataId($(this));
 
-        console.log("Boutton : " + id_choice);
         // Créez l'URL pour la requête JSON en utilisant la valeur de "orderFormCode"
         //const jsonUrl = `https://secure.vauban-editions.com/${orderFormCode}/order-form/config.json`;
         // Effectuez la requête JSON
@@ -442,5 +460,5 @@ document.addEventListener("falcon-ready", function () {
     </p>
     <p style="font-size: 12px;">
     En cliquant ci-dessus, je confirme ma commande et j'accepte les <a href="https://www.vauban-editions.com/cgv" target="”_blank”">conditions générales de vente</a>.
-    </p>`);
+    </p>`);**/
 });
