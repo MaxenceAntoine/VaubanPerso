@@ -541,7 +541,7 @@ document.addEventListener("vanguard-ready", function () {
     var choices = []; // Crée un tableau vide pour les choices
     window.VANGUARD_LOCAL_CONFIG.choices.forEach(function (choice, index) {
         choices.push(new Choice(choice.id, index + 1, choice.stackLetter, choice.paymentMethod,
-            choice.startingPriceDuration,
+            choice.initialTermLength,
             choice.renewalTermLength, choice.startingPrice, choice.defaultPrice, choice
             .isBcl, choice.customHtml))
 
