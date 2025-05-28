@@ -15,15 +15,16 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     this.default_price = default_price;
     this.auto_renew = auto_renew;
     this.customHtml = customHtml;
+    this.starting_price = 
 
 
-    if (starting_price_duration == 0) {
+   /**  if (starting_price_duration == 0) {
         this.starting_price = default_price;
         this.starting_price_duration = renewal_term_length;
     } else {
         this.starting_price = starting_price;
         this.starting_price_duration = starting_price_duration;
-    }
+    }*/
 
     try {
         this.customHtml = JSON.parse(customHtml);
@@ -83,6 +84,17 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
         }
     };
 
+    /**
+     * Fonction qui permet de savoir si il y a un ou plusieurs mois gratuit dans l'offre
+     **/
+    Choice.prototype.isAnnuelTriFreemonth = function () {
+        if (this.starting_price_duration == 15 && this.renewal_term_length == 12) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
 
 
     /**
@@ -132,6 +144,8 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
             affichage = "à vie";
         } else if (this.isFreeMonth()) {
             affichage = "gratuit";
+        } else if (this.isAnnuelTriFreemonth()) {
+            affichage = "Annuel";
         } else {
             affichage = convertToDuration(this.starting_price_duration);
         }
@@ -542,7 +556,7 @@ document.addEventListener("vanguard-ready", function () {
     window.VANGUARD_LOCAL_CONFIG.choices.forEach(function (choice, index) {
         choices.push(new Choice(choice.id, index + 1, choice.stackLetter, choice.paymentMethod,
             choice.initialTermLength,
-            choice.renewalTermLength, choice.startingPrice, choice.defaultPrice, choice
+            choice.renewalTermLength, choice.price, choice.defaultPrice, choice
             .isBcl, choice.customHtml))
 
     });
