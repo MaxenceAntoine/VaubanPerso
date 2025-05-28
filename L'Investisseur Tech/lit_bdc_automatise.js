@@ -15,7 +15,8 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     this.default_price = default_price;
     this.auto_renew = auto_renew;
     this.customHtml = customHtml;
-    this.starting_price = 
+    this.starting_price = starting_price
+    this.starting_price_duration = starting_price_duration;
 
 
    /**  if (starting_price_duration == 0) {
