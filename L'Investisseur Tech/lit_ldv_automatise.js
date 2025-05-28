@@ -8,14 +8,19 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
     this.default_price = default_price;
     this.auto_renew = auto_renew;
     this.customHtml = customHtml;
-    if (starting_price_duration == 0) {
+
+    this.starting_price = starting_price
+    this.starting_price_duration = starting_price_duration;
+
+
+   /**  if (starting_price_duration == 0) {
         this.starting_price = default_price;
         this.starting_price_duration = renewal_term_length;
-    }
-    else {
+    } else {
         this.starting_price = starting_price;
         this.starting_price_duration = starting_price_duration;
-    }
+    }*/
+    
     try {
         this.customHtml = JSON.parse(customHtml);
         this.old_price = this.customHtml.old_price;
@@ -390,8 +395,8 @@ document.addEventListener("falcon-ready", function () {
                     choices_ldv.forEach(function (choice, index) {
                         if(choice.id == id_choice){
                             var choice_now = new Choice(choice.id, index + 1, choice.stackLetter, choice.paymentMethod,
-                                                        choice.startingPriceDuration,
-                                                        choice.renewalTermLength, choice.startingPrice, choice.defaultPrice, choice
+                                                        choice.initialTermLength,
+                                                        choice.renewalTermLength, choice.price, choice.defaultPrice, choice
                                                         .isBcl, choice.customHtml);
                             // Création de la div parent
                             //var divChoice = $(`<div class="block-offre col-sm-12 my-2 `+choice_size+` text-center"></div>`);
