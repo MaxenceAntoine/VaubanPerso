@@ -242,6 +242,9 @@ function convertToDuration(number, genre = 0) {
     case 12:
     genre == 0 ? duration = 'annuel' : duration = 'annuelle';
     break;
+    case 15:
+    genre == 0 ? duration = 'annuel' : duration = 'annuelle';
+    break;
     case 24:
     genre == 0 ? duration = 'biennal' : duration = 'biennalle';
     break;
@@ -270,6 +273,9 @@ function convertToDurationBis(number) {
     duration = 'semestre';
     break;
     case 12:
+    duration = 'an';
+    break;
+    case 15:
     duration = 'an';
     break;
     case 24:
@@ -409,6 +415,7 @@ document.addEventListener("falcon-ready", function () {
                             choice_div.parent().css("padding-left", "calc(var(--bs-gutter-x)*-0.5)");
                             choice_div.parent().parent().addClass(`justify-content-around`);
                             // Création de la div au-dessus du bouton
+                            var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
                             var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
                             var divAuDessus = $(`<div style="background-color: `+colorChoice+`; color: #ffffff;" class="py-4">
                                 <p style="font-size: 16px;">OFFRE</p>
