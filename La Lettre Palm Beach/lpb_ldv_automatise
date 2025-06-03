@@ -301,34 +301,55 @@ function getDataId($element) {
     }
 }
 document.addEventListener("falcon-ready", function () {
-    window.addEventListener("load", function () {
-        let urlArrivee = new URL(window.location.href);
-        //création d'une nouvelle variable de l'url de la page
-        let search_params = urlArrivee.searchParams;
-        //recherche des paramètres du lien
-        let sepa = search_params.get('1c_sepa');
-        let cc = search_params.get('1c_cc');
-        if (sepa == "True" || cc == "True") {
-            $('.bdc').addClass("d-none");
-            $('.sepa-or-cc').removeClass("d-none");
-            $('.sepa-or-cc').removeClass("d-none-editor");
-            console.log("$('.bdc').addClass();")
-        }
-        else {
-            $('.sepa-or-cc').addClass("d-none");
-            $('.bdc').removeClass("d-none");
-            $('.bdc').removeClass("d-none-editor");
-            console.log("$('.sepa-or-cc').addClass();")
-        }
-        // Créez un tableau vide pour stocker les données JSON
-        var choices = [];
-        var colorChoice = ["black","black","black"];
-        var idChoiceRecap = [];
-        var nbchoiceSEPA = 0;
-        var nbchoiceCC = 0;
-        // Crée un tableau vide pour les choices
-        // Sélectionnez tous les boutons avec l'attribut "data-type" égal à "direct"
-        const boutonsDirect = $('[data-type-link="1c_sepa-or-1c_cc"]');
+    let urlArrivee = new URL(window.location.href);
+    //création d'une nouvelle variable de l'url de la page
+    let search_params = urlArrivee.searchParams;
+    //recherche des paramètres du lien
+    let sepa = search_params.get('1c_sepa');
+    let cc = search_params.get('1c_cc');
+    if (sepa == "True" || cc == "True") {
+        $('.bdc').addClass("d-none");
+        $('.sepa-or-cc').removeClass("d-none");
+        $('.sepa-or-cc').removeClass("d-none-editor");
+        console.log("$('.bdc').addClass();")
+    }
+    else {
+        $('.sepa-or-cc').addClass("d-none");
+        $('.bdc').removeClass("d-none");
+        $('.bdc').removeClass("d-none-editor");
+        console.log("$('.sepa-or-cc').addClass();")
+    }
+    // Créez un tableau vide pour stocker les données JSON
+    var choices = [];
+    var colorChoice = ["black","black","black"];
+    var idChoiceRecap = [];
+    var nbchoiceSEPA = 0;
+    var nbchoiceCC = 0;
+    // Crée un tableau vide pour les choices
+    // Sélectionnez tous les boutons avec l'attribut "data-type" égal à "direct"
+    const boutonsDirect = $('[data-type-link="1c_sepa-or-1c_cc"]');
+
+    const waitForChoices = () => {
+        return new Promise((resolve) => {
+        const checkInterval = setInterval(() => {
+            if (
+            typeof campaign !== "undefined" &&
+            campaign.config &&
+            Array.isArray(campaign.config.choices) &&
+            campaign.config.choices.length > 0
+            ) {
+            clearInterval(checkInterval);
+            resolve(campaign.config.choices);
+            }
+        }, 100); // vérifie toutes les 100ms
+        });
+    };
+
+    // Utilisation :
+    waitForChoices().then((choices_ldv) => {
+        console.log("La variable est prête V3 :", choices_ldv);
+        lien_bdc = journey.config.vanguardHost+"/"+campaign.config.offerCode+"/order-form/index.html?trackingCode="+campaign.config.defaultSourceCode
+        console.log("lien BDC : " + lien_bdc);
         // Parcourez la liste des boutons direct
         boutonsDirect.each(function() {
             // Récupérez la valeur de l'attribut "data-order-form-code" de chaque bouton
