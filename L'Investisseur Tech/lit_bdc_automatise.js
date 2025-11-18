@@ -65,7 +65,7 @@ function Choice(id, index, stackLetter, paymentMethod, starting_price_duration, 
      * Fonction qui permet de savoir si c'est une offre life
      **/
     Choice.prototype.isLife = function () {
-        if ((this.starting_price > 500 && this.default_price == 99 || this.starting_price > 300 && this
+        if ((this.starting_price > 500 && this.default_price == 99 || this.starting_price > 280 && this
                 .default_price == 19) && this.starting_price_duration == 12 && this.renewal_term_length == 12 &&
             this.auto_renew == 1) {
             return true;
