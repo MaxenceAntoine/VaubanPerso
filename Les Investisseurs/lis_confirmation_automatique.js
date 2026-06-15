@@ -1,4 +1,5 @@
-function Choice(id, classNameIdentifier, productName, index, stackLetter, paymentMethod, starting_price_duration,
+<script>
+    function Choice(id, classNameIdentifier, productName, index, stackLetter, paymentMethod, starting_price_duration,
     renewal_term_length, starting_price,
     default_price, auto_renew, customHtml, type) {
     this.id = id;
@@ -87,10 +88,15 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
     /**
      * Fonction qui retourne la durée de renouvellement du choice de base
      **/
-    Choice.prototype.startDuration = function (genre = 0) {
+    Choice.prototype.startDuration = function (genre = 0, option = 0) {
         if (this.isLife()) {
             return "à vie";
         } else if (this.isFreeMonth()) {
+            if (option == "green") {
+                return convertToDuration(this.renewal_term_length, genre) + ` avec <span style="color:green;"><u>` + this
+                .starting_price_duration +
+                ` mois gratuit</u></span>`;
+            }
             return convertToDuration(this.renewal_term_length, genre) + ` avec ` + this
                 .starting_price_duration +
                 ` mois gratuit`;
@@ -114,7 +120,7 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
             return `<div class="w-100 mt-3 no-extrasell btn text-center" style="background-color: red; color: white;">Non merci.</div><hr>`
         } else {
             return `<div class="text-center mt-3 font-weight-bold">
-                            <h3 class="text-uppercase"><strong>OFFRE ` + this.startDuration(1) + ` : <em>` + this
+                            <h3 class="text-uppercase"><strong>OFFRE ` + this.startDuration(1, "green") + ` : <em>` + this
                 .productName + `</em></strong></h3>
                             ` + this.printAlert() + this.printButton() + this.printPaiement() +
                 `</div><hr>`
@@ -160,7 +166,7 @@ function Choice(id, classNameIdentifier, productName, index, stackLetter, paymen
                     style: "currency",
                     currency: "EUR"
                 }) +
-                `</span> tout de suite pour l’abonnement ` + this.startDuration() + ` au lieu de `+ printPreviousChoice(previous_choice) + ` d'abonnement</p><p>Ensuite, je ne paie que ` + this
+                `</span> tout de suite pour l’abonnement ` + this.startDuration(0, "green") + ` au lieu de `+ printPreviousChoice(previous_choice) + ` d'abonnement</p><p>Ensuite, je ne paie que ` + this
                 .default_price.toLocaleString("fr-FR", {
                     style: "currency",
                     currency: "EUR"
@@ -204,7 +210,7 @@ function convertToDuration(number, genre = 0) {
             genre == 0 ? duration = 'annuel' : duration = 'annuelle';
             break;
         case 24:
-            genre == 0 ? duration = 'biennal' : duration = 'biennalle';
+            genre == 0 ? duration = 'de 2 ans' : duration = 'de 2 ans';
             break;
         case 36:
             genre == 0 ? duration = 'de 3 ans' : duration = 'de 3 ans';
@@ -228,7 +234,10 @@ function printPreviousChoice(previous_choice){
                 currency: "EUR"
             }) + ` par ` + convertToDurationBis(previous_choice.starting_price_duration)
         }else{
-            return `0&nbsp;€ les ` + previous_choice.starting_price + ` mois puis ` + previous_choice.default_price + ` par ` + convertToDurationBis(previous_choice.renewal_term_length)
+            return `0&nbsp;€ les ` + previous_choice.starting_price_duration + ` mois puis ` + previous_choice.default_price.toLocaleString("fr-FR", {
+                style: "currency",
+                currency: "EUR"
+            }) + ` par ` + convertToDurationBis(previous_choice.renewal_term_length)
         }
     } else {
         return previous_choice.starting_price.toLocaleString("fr-FR", {
@@ -302,14 +311,22 @@ document.addEventListener("vanguard-ready", function () {
     // Parcourir chaque balise "publication"
     $("publication").each(function () {
         // Modifier le contenu texte avec la valeur "config.publication"
-        $(this).text(config_bdc.publication);
+        $(this).html("<em>"+config_bdc.publication+"</em>");
     });
+
+    $('span[data-auteur="publication"]').each(function() {
+        $(this).text(config_bdc.publication);
+    }); 
 
     // Parcourir chaque balise "auteur"
     $("auteur").each(function () {
         // Modifier le contenu texte avec la valeur "config.auteur"
         $(this).text(config_bdc.auteur);
     });
+
+    $('span[data-auteur="publication"]').each(function() {
+        $(this).text(config_bdc.publication);
+    }); 
 
     // Parcourir chaque balise "previous_choice_price"
     $("previous_choice_price").each(function () {
@@ -320,6 +337,14 @@ document.addEventListener("vanguard-ready", function () {
         }));
     });
 
+
+    $('span[data-previous-choice="starting_price"]').each(function() {
+       $(this).text(previous_choice.starting_price.toLocaleString("fr-FR", {
+           style: "currency",
+           currency: "EUR"
+       }));
+   });
+
     // Parcourir chaque balise "previous_choice_price"
     $("previous_default_price").each(function () {
         // Modifier le contenu texte avec la valeur "config.publication"
@@ -329,9 +354,39 @@ document.addEventListener("vanguard-ready", function () {
         }));
     });
 
+    $('span[data-previous-choice="default_price"]').each(function() {
+        $(this).text(previous_choice.default_price.toLocaleString("fr-FR", {
+           style: "currency",
+           currency: "EUR"
+       }));
+   });
+
+    // Parcourir chaque balise "publication"
+    $("previous_choice_duration").each(function () {
+        // Modifier le contenu texte avec la valeur "config.publication"
+        $(this).text(previous_choice.starting_price_duration);
+    });
+
+    $('span[data-previous-choice="starting_duration"]').each(function() {
+       $(this).text(previous_choice.starting_price_duration);
+   });
+
+    // Parcourir chaque balise "publication"
+    $("previous_choice_duration_text").each(function () {
+        // Modifier le contenu texte avec la valeur "config.publication"
+        $(this).text(convertToDuration(previous_choice.starting_price_duration));
+    });
+
+    $('span[data-previous-choice="starting_duration_text"]').each(function() {
+       $(this).text(convertToDuration(previous_choice.starting_price_duration));
+   });
+   $('span[data-previous-choice="phrase"]').each(function() {
+       $(this).text(printPreviousChoice(previous_choice));
+   });
+
     $('*').filter(function () {
         // Utilisez une expression régulière pour filtrer les balises qui correspondent au pattern <previous_choice_price_...>
-        return this.tagName.match(/^PREVIOUS_CHOICE_PRICE_\d{1,2}$/i);
+        return this.tagName.match(/^PREVIOUS_CHOICE_PRICE_\d{1,3}$/i);
     }).each(function () {
         // Récupérez le nom de la balise (ex. "PREVIOUS_CHOICE_PRICE_1")
         var tagName = this.tagName;
@@ -361,11 +416,7 @@ document.addEventListener("vanguard-ready", function () {
         }));
         // Vous pouvez faire d'autres opérations avec le nombre ici si nécessaire
     });
-    // Parcourir chaque balise "publication"
-    $("previous_choice_duration").each(function () {
-        // Modifier le contenu texte avec la valeur "config.publication"
-        $(this).text(previous_choice.starting_price_duration);
-    });
+    
 
     // Parcourir chaque balise "publication"
     $("choice_starting_price").each(function () {
@@ -376,6 +427,13 @@ document.addEventListener("vanguard-ready", function () {
         }));
     });
 
+    $('span[data-choice="starting_price"]').each(function() {
+       $(this).text(choices[0].starting_price.toLocaleString("fr-FR", {
+           style: "currency",
+           currency: "EUR"
+       }));
+   });
+
     // Parcourir chaque balise "publication"
     $("choice_default_price").each(function () {
         // Modifier le contenu texte avec la valeur "config.publication"
@@ -385,10 +443,25 @@ document.addEventListener("vanguard-ready", function () {
         }));
     });
 
+    $('span[data-choice="default_price"]').each(function() {
+       $(this).text(choices[0].default_price.toLocaleString("fr-FR", {
+           style: "currency",
+           currency: "EUR"
+       }));
+   });
+
     // Parcourir chaque balise "publication"
     $("choice_duration").each(function () {
         // Modifier le contenu texte avec la valeur "config.publication"
         $(this).text(choices[0].starting_price_duration);
     });
 
+    $('span[data-choice="default_duration"]').each(function() {
+       $(this).text(choices[0].default_price.toLocaleString("fr-FR", {
+           style: "currency",
+           currency: "EUR"
+       }));
+   });
+
 });
+</script>

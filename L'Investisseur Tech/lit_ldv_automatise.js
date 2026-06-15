@@ -416,7 +416,9 @@ document.addEventListener("falcon-ready", function () {
                             choice_div.parent().parent().addClass(`justify-content-around`);
                             // Création de la div au-dessus du bouton
                             var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
-                            var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
+                            if (colorChoice === undefined) {
+                                x = "black";
+                            }
                             var divAuDessus = $(`<div style="background-color: `+colorChoice+`; color: #ffffff;" class="py-4">
                                 <p style="font-size: 16px;">OFFRE</p>
                                 <h3 class="fs-4 text-uppercase">`+choice_now.duration(1)+`</h3>
