@@ -226,7 +226,7 @@ function Choice(
       this.printMoyenPaiement() +
       ` par ` +
       convertToDurationBis(this.renewal_term_length) +
-      ` et ainsi de suite jusqu'à ce que vous demandiez l'arrêt de l'abonnement.
+      ` et ainsi de suite jusqu'à ce que je demande l'arrêt de l'abonnement.
                   </p>
 
                   <p>Je me réjouis de découvrir ` +
