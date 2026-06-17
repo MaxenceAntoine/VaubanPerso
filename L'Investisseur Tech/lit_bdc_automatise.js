@@ -692,22 +692,25 @@ document.addEventListener("vanguard-ready", function () {
       choice.paymentMethod = selectedPaymentMethod;
     });
 
-    customizeChoices(choices);
-    addEventOnChoice(choices);
+    // setTimeout(0) ensures customizeChoices runs after Vanguard's own re-render handler
+    setTimeout(function () {
+      customizeChoices(choices);
+      addEventOnChoice(choices);
 
-    var choiceSelected;
-    var selectedInput = $(".vanguard-custom-choice.selected input");
-    if (selectedInput.length > 0) {
-      var inputId = parseInt(
-        selectedInput.attr("id").replace("vanguard-choice-", ""),
-      );
-      $.each(choices, function (index, choice) {
-        if (choice.id == inputId) {
-          choiceSelected = choice;
-        }
-      });
-      changeRecapitulatif(choiceSelected);
-    }
+      var choiceSelected;
+      var selectedInput = $(".vanguard-custom-choice.selected input");
+      if (selectedInput.length > 0) {
+        var inputId = parseInt(
+          selectedInput.attr("id").replace("vanguard-choice-", ""),
+        );
+        $.each(choices, function (index, choice) {
+          if (choice.id == inputId) {
+            choiceSelected = choice;
+          }
+        });
+        changeRecapitulatif(choiceSelected);
+      }
+    }, 0);
   });
   $("#items-choices").removeClass("list-group");
   $("#items-choices").addClass("row");
