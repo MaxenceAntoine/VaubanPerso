@@ -683,10 +683,13 @@ document.addEventListener("vanguard-ready", function () {
   });
 
   //window.choices_window = choices;
-
-  // Ajout d'un écouteur d'événement au changement
+  // Écouteur sur le switch de méthode de paiement (SEPA / carte bancaire)
   $('input[name="payment"]').on("click", function () {
-    console.log("L'input a été modifié !");
+    var selectedPaymentMethod = $(this).val();
+
+    choices.forEach(function (choice) {
+      choice.paymentMethod = selectedPaymentMethod;
+    });
 
     customizeChoices(choices);
     addEventOnChoice(choices);
@@ -702,8 +705,6 @@ document.addEventListener("vanguard-ready", function () {
           choiceSelected = choice;
         }
       });
-      console.log(inputId);
-      console.log(choiceSelected);
       changeRecapitulatif(choiceSelected);
     }
   });
