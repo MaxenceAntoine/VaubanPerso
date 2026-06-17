@@ -480,21 +480,23 @@ function convertToDurationBis(number) {
 }
 
 function addEventOnChoice(choices) {
-  $(".vanguard-choice-name").click(function () {
-    var choiceSelected = null;
-    var inputId = parseInt(
-      $(this)
-        .find('input[name="vanguard-choices"]')
-        .attr("id")
-        .replace("vanguard-choice-", ""),
-    );
-    $.each(choices, function (index, choice) {
-      if (choice.id == inputId) {
-        choiceSelected = choice;
-      }
+  $(".vanguard-choice-name")
+    .off("click.vanguard-choice")
+    .on("click.vanguard-choice", function () {
+      var choiceSelected = null;
+      var inputId = parseInt(
+        $(this)
+          .find('input[name="vanguard-choices"]')
+          .attr("id")
+          .replace("vanguard-choice-", ""),
+      );
+      $.each(choices, function (index, choice) {
+        if (choice.id == inputId) {
+          choiceSelected = choice;
+        }
+      });
+      changeRecapitulatif(choiceSelected);
     });
-    changeRecapitulatif(choiceSelected);
-  });
 }
 
 function changeRecapitulatif(choice) {
@@ -607,10 +609,9 @@ function customizeChoices(choices) {
       choices.length <= 4
         ? "my-1 col-md-6 col-12 mb-6"
         : "my-1 col-md col-12 mb-6";
-    // Trouver l'élément avec l'ID "vanguard-choice-[choice.id]"
     const element = $("#vanguard-choice-" + choice.id);
+    element.nextAll(".generic_content").remove();
 
-    //Remplissage du choice
     element.after(
       `<div class="generic_content">
           <div class="generic_head_price">
