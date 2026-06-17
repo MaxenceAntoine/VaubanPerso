@@ -692,10 +692,13 @@ document.addEventListener("vanguard-ready", function () {
       choice.paymentMethod = selectedPaymentMethod;
     });
 
+    $("#items-choices").css("visibility", "hidden");
+
     // setTimeout(0) ensures customizeChoices runs after Vanguard's own re-render handler
     setTimeout(function () {
       customizeChoices(choices);
       addEventOnChoice(choices);
+      $("#items-choices").css("visibility", "visible");
 
       var choiceSelected;
       var selectedInput = $(".vanguard-custom-choice.selected input");
