@@ -339,10 +339,7 @@ document.addEventListener("falcon-ready", function () {
 
     // Créez un tableau vide pour stocker les données JSON
     var choices = [];
-    var colorChoice = ["red","green","blue"];
     var idChoiceRecap = [];
-    var nbchoiceSEPA = 0;
-    var nbchoiceCC = 0;
     // Crée un tableau vide pour les choices
     // Sélectionnez tous les boutons avec l'attribut "data-type" égal à "direct"
     const boutonsDirect = $('[data-type-link="1c_sepa-or-1c_cc"]');
@@ -378,6 +375,10 @@ document.addEventListener("falcon-ready", function () {
             const choice_div = $(this);
             const orderFormCode = $(this).attr('data-order-form-code');
             var id_choice = getDataId($(this));
+            // Index de couleur basé sur la position du bouton dans le DOM
+            const colorIndex = $(this).attr('data-1c-sepa-id') !== undefined
+                ? $('[data-1c-sepa-id]').index(this)
+                : $('[data-1c-cc-id]').index(this);
     
             // Créez l'URL pour la requête JSON en utilisant la valeur de "orderFormCode"
             //const jsonUrl = `https://secure.vauban-editions.com/${orderFormCode}/order-form/config.json`;
@@ -415,10 +416,7 @@ document.addEventListener("falcon-ready", function () {
                             choice_div.parent().css("padding-left", "calc(var(--bs-gutter-x)*-0.5)");
                             choice_div.parent().parent().addClass(`justify-content-around`);
                             // Création de la div au-dessus du bouton
-                            var colorChoice = choice_now.paymentMethod === "sepa" ? config.colorChoice[nbchoiceSEPA] : config.colorChoice[nbchoiceCC] ;
-                            if (colorChoice === undefined) {
-                                x = "black";
-                            }
+                            var colorChoice = (typeof config !== "undefined" && config.colorChoice && config.colorChoice[colorIndex]) || "black";
                             var divAuDessus = $(`<div style="background-color: `+colorChoice+`; color: #ffffff;" class="py-4">
                                 <p style="font-size: 16px;">OFFRE</p>
                                 <h3 class="fs-4 text-uppercase">`+choice_now.duration(1)+`</h3>
@@ -431,8 +429,6 @@ document.addEventListener("falcon-ready", function () {
                                 <p style="font-size: 16px;">Dossiers + Accès Portefeuille</p>
                                 </div>
                             `);
-                            // Utilisez un opérateur ternaire pour incrémenter la variable appropriée en fonction du type
-                            choice_now.paymentMethod === "sepa" ? nbchoiceSEPA++ : nbchoiceCC++;
                             // Ajout de la div au-dessus du bouton dans la div parent
                             choice_div.before(divAuDessus);
                             choice_div.children().first().html(`Je profite de l'offre en 1 clic`);
