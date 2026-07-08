@@ -389,7 +389,8 @@ document.addEventListener("falcon-ready", function () {
   const boutonsDirect = $('[data-type-link="1c_sepa-or-1c_cc"]');
 
   const waitForChoices = () => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+      var attempts = 0;
       const checkInterval = setInterval(() => {
         if (
           typeof campaign !== "undefined" &&
@@ -399,9 +400,28 @@ document.addEventListener("falcon-ready", function () {
         ) {
           clearInterval(checkInterval);
           resolve(campaign.config.choices);
+        } else if (++attempts >= 100) {
+          // abandon après 10 secondes (100 x 100ms)
+          clearInterval(checkInterval);
+          reject(
+            new Error(
+              "campaign.config.choices indisponible après 10s : le script LDV ne peut pas s'initialiser",
+            ),
+          );
         }
       }, 100); // vérifie toutes les 100ms
     });
+  };
+
+  // Cache des config.json déjà demandés (une seule requête par orderFormCode)
+  var configCache = {};
+  const getOrderFormConfig = (orderFormCode) => {
+    if (!configCache[orderFormCode]) {
+      const jsonUrl = `https://secure.la-lettre-palm-beach.com/${orderFormCode}/order-form/config.json`;
+      console.log("jsonUrl: " + jsonUrl);
+      configCache[orderFormCode] = $.ajax({ url: jsonUrl, dataType: "json" });
+    }
+    return configCache[orderFormCode];
   };
 
   // Utilisation :
@@ -426,14 +446,9 @@ document.addEventListener("falcon-ready", function () {
         $(this).attr("data-1c-sepa-id") !== undefined
           ? $("[data-1c-sepa-id]").index(this)
           : $("[data-1c-cc-id]").index(this);
-      // Créez l'URL pour la requête JSON en utilisant la valeur de "orderFormCode"
-      const jsonUrl = `https://secure.la-lettre-palm-beach.com/${orderFormCode}/order-form/config.json`;
-      // Effectuez la requête JSON
-      console.log("jsonUrl: " + jsonUrl);
-      $.ajax({
-        url: jsonUrl,
-        dataType: "json",
-        success: function (data) {
+      // Effectuez la requête JSON (mise en cache par orderFormCode)
+      getOrderFormConfig(orderFormCode)
+        .done(function (data) {
           // Ajoutez les données JSON au tableau
           var choice_size = "col-md-12";
           switch (data.choices.length) {
@@ -552,12 +567,20 @@ document.addEventListener("falcon-ready", function () {
           });
           window.choices_window = choices;
           // Utilisez la méthode .parent() pour récupérer la div parent
-        },
-        error: function (xhr, status, error) {
-          // Gestion des erreurs ici
-          console.error(status, error);
-        },
-      });
+        })
+        .fail(function (xhr, status, error) {
+          console.error(
+            "Impossible de charger le config.json de " + orderFormCode + " :",
+            status,
+            error,
+          );
+          // Fallback : on remplace le bouton 1clic par un lien vers le bon de commande
+          choice_div.html(
+            `<a class="btn-order-form-button" href="` +
+              lien_bdc +
+              `">Cliquez ici pour accéder au bon de commande</a>`,
+          );
+        });
     });
     $(".bloc_recap").after(
       `<p style="font-size: 12px;">
@@ -570,5 +593,7 @@ document.addEventListener("falcon-ready", function () {
         En cliquant ci-dessus, je confirme ma commande et j'accepte les <a href="https://www.vauban-editions.com/cgv" target="”_blank”">conditions générales de vente</a>.
         </p>`,
     );
+  }).catch((err) => {
+    console.error(err);
   });
 });
