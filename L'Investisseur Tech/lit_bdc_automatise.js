@@ -234,7 +234,7 @@ function Choice(
    **/
   Choice.prototype.printSticker = function () {
     return this.sticker_satisfait_echange
-      ? `<img style="position: absolute; top: 0; right: 0; transform: translate(35%, -35%) rotate(8deg); width: 30%; max-width: 90px; height: auto; z-index: 10;"
+      ? `<img class="sticker-satisfait-echange" style="position: absolute; top: 0; right: 0; transform: translate(35%, -35%) rotate(8deg); width: 30%; max-width: 90px; height: auto; z-index: 10;"
                       src="https://vauban-cdn.pubfac.io/uploads/sicker-satisfait-echange-` +
           this.sticker_satisfait_echange +
           `.png" alt="Satisfait ou échangé ` +
@@ -626,13 +626,12 @@ function customizeChoices(choices) {
         ? "my-1 col-md-6 col-12 mb-6"
         : "my-1 col-md col-12 mb-6";
     const element = $("#vanguard-choice-" + choice.id);
-    element.nextAll(".generic_content").remove();
+    element.nextAll(".generic_content, .sticker-satisfait-echange").remove();
 
     element.after(
-      `<div class="generic_content" style="position: relative; overflow: visible;">
-          ` +
-        choice.printSticker() +
-        `<div class="generic_head_price">
+      choice.printSticker() +
+        `<div class="generic_content">
+          <div class="generic_head_price">
               <div class="generic_head_content">
                   <div class="head_bg">&nbsp;</div>
                   <div class="head">` +
@@ -676,9 +675,11 @@ function customizeChoices(choices) {
       `<style id="sticker-overflow-fix">
         #items-choices,
         #items-choices .vanguard-custom-choice,
-        #items-choices .vanguard-choice-name,
-        #items-choices .generic_content {
+        #items-choices .vanguard-choice-name {
           overflow: visible !important;
+        }
+        #items-choices .vanguard-choice-name {
+          position: relative;
         }
       </style>`,
     );
