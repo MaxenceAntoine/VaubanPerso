@@ -629,7 +629,7 @@ function customizeChoices(choices) {
     element.nextAll(".generic_content").remove();
 
     element.after(
-      `<div class="generic_content" style="position: relative;">
+      `<div class="generic_content" style="position: relative; overflow: visible;">
           ` +
         choice.printSticker() +
         `<div class="generic_head_price">
@@ -676,7 +676,8 @@ function customizeChoices(choices) {
       `<style id="sticker-overflow-fix">
         #items-choices,
         #items-choices .vanguard-custom-choice,
-        #items-choices .vanguard-choice-name {
+        #items-choices .vanguard-choice-name,
+        #items-choices .generic_content {
           overflow: visible !important;
         }
       </style>`,
