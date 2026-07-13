@@ -39,10 +39,12 @@ function Choice(
     this.customHtml = JSON.parse(customHtml);
     this.old_price = this.customHtml.old_price;
     this.engagement = this.customHtml.engagement;
+    this.sticker_satisfait_echange = this.customHtml.sticker_satisfait_echange;
   } catch (error) {
     this.customHtml = "";
     this.old_price = null;
     this.engagement = 0;
+    this.sticker_satisfait_echange = null;
   }
 
   /**
@@ -225,6 +227,20 @@ function Choice(
           this.old_price +
           `&nbsp;€</p>`
       : `<p style="margin-bottom: 0px !important;">&nbsp;</p>`;
+  };
+
+  /**
+   * Fonction qui retourne l'affichage du sticker "Satisfait ou échangé" en haut à droite du cadre (rien si pas d'info)
+   **/
+  Choice.prototype.printSticker = function () {
+    return this.sticker_satisfait_echange
+      ? `<img style="position: absolute; top: -18px; right: -12px; transform: rotate(8deg); width: 30%; max-width: 90px; height: auto; z-index: 10;"
+                      src="https://vauban-cdn.pubfac.io/uploads/sicker-satisfait-echange-` +
+          this.sticker_satisfait_echange +
+          `.png" alt="Satisfait ou échangé ` +
+          this.sticker_satisfait_echange +
+          ` jours">`
+      : ``;
   };
 
   /**
@@ -613,8 +629,10 @@ function customizeChoices(choices) {
     element.nextAll(".generic_content").remove();
 
     element.after(
-      `<div class="generic_content">
-          <div class="generic_head_price">
+      `<div class="generic_content" style="position: relative;">
+          ` +
+        choice.printSticker() +
+        `<div class="generic_head_price">
               <div class="generic_head_content">
                   <div class="head_bg">&nbsp;</div>
                   <div class="head">` +
