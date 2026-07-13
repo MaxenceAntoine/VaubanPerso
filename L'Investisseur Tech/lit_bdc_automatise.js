@@ -234,7 +234,7 @@ function Choice(
    **/
   Choice.prototype.printSticker = function () {
     return this.sticker_satisfait_echange
-      ? `<img style="position: absolute; top: -18px; right: -12px; transform: rotate(8deg); width: 30%; max-width: 90px; height: auto; z-index: 10;"
+      ? `<img style="position: absolute; top: 0; right: 0; transform: translate(35%, -35%) rotate(8deg); width: 30%; max-width: 90px; height: auto; z-index: 10;"
                       src="https://vauban-cdn.pubfac.io/uploads/sicker-satisfait-echange-` +
           this.sticker_satisfait_echange +
           `.png" alt="Satisfait ou échangé ` +
