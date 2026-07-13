@@ -663,6 +663,15 @@ function customizeChoices(choices) {
           </div>
       </div>`,
     );
+
+    // Le sticker déborde du cadre : neutralise les overflow:hidden des
+    // conteneurs parents (jusqu'au bloc des choix) qui le rogneraient
+    if (choice.sticker_satisfait_echange) {
+      element
+        .parentsUntil("#items-choices")
+        .css("overflow", "visible");
+      $("#items-choices").css("overflow", "visible");
+    }
   });
 
   $(".generic_content").each(function () {
