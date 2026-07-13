@@ -222,7 +222,7 @@ function Choice(
    **/
   Choice.prototype.printOldPrice = function () {
     return this.old_price
-      ? `<p style="text-decoration: line-through;; color: red; font-weight: 600; margin-bottom: 0px !important;">
+      ? `<p style="text-decoration: line-through; color: red; font-weight: 600; margin-bottom: 0px !important;">
                       ` +
           this.old_price +
           `&nbsp;€</p>`
@@ -651,7 +651,7 @@ function customizeChoices(choices) {
         choice.starting_price +
         `&nbsp;€ </span>TTC</span>
 
-                  <br><p style="font-size:12px" class="mt-4 mb-2"">` +
+                  <br><p style="font-size:12px" class="mt-4 mb-2">` +
         choice.printRenouvellement() +
         `<br>` +
         choice.printEngagement() +
@@ -664,15 +664,24 @@ function customizeChoices(choices) {
       </div>`,
     );
 
-    // Le sticker déborde du cadre : neutralise les overflow:hidden des
-    // conteneurs parents (jusqu'au bloc des choix) qui le rogneraient
-    if (choice.sticker_satisfait_echange) {
-      element
-        .parentsUntil("#items-choices")
-        .css("overflow", "visible");
-      $("#items-choices").css("overflow", "visible");
-    }
   });
+
+  // Le sticker déborde du cadre : neutralise les overflow:hidden des
+  // conteneurs parents (li, .vanguard-choice-name, #items-choices) qui le rogneraient
+  if (
+    choices.some((choice) => choice.sticker_satisfait_echange) &&
+    $("#sticker-overflow-fix").length === 0
+  ) {
+    $("head").append(
+      `<style id="sticker-overflow-fix">
+        #items-choices,
+        #items-choices .vanguard-custom-choice,
+        #items-choices .vanguard-choice-name {
+          overflow: visible !important;
+        }
+      </style>`,
+    );
+  }
 
   $(".generic_content").each(function () {
     // Suppression de tous les éléments 'span' qui suivent l'élément courant
