@@ -251,7 +251,7 @@ function Choice(
     }
     return type
       ? `<img class="sticker-satisfait-echange" style="position: absolute; top: 0; right: 0; transform: translate(35%, -35%) rotate(8deg); width: 30%; max-width: 90px; height: auto; z-index: 10;"
-                      src="https://vauban-cdn.pubfac.io/uploads/sicker-satisfait-` +
+                      src="https://vauban-cdn.pubfac.io/uploads/sticker-satisfait-` +
           type +
           `-` +
           jours +
