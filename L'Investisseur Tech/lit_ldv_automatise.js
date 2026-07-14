@@ -302,10 +302,17 @@ function printPrice(price){
     }
 }
 
-function getDataId($element) {
+function getDataId($element, sepa, cc) {
     var ccId = $element.attr('data-1c-cc-id');
     var sepaId = $element.attr('data-1c-sepa-id');
-    if (ccId !== undefined) {
+    // Sélection selon le moyen de paiement du visiteur (paramètres d'URL 1c_sepa / 1c_cc)
+    if (sepa == "True" && sepaId !== undefined) {
+        return sepaId;
+    }
+    else if (cc == "True" && ccId !== undefined) {
+        return ccId;
+    }
+    else if (ccId !== undefined) {
         return ccId;
     }
     else if (sepaId !== undefined) {
@@ -374,7 +381,7 @@ document.addEventListener("falcon-ready", function () {
             // Récupérez la valeur de l'attribut "data-order-form-code" de chaque bouton
             const choice_div = $(this);
             const orderFormCode = $(this).attr('data-order-form-code');
-            var id_choice = getDataId($(this));
+            var id_choice = getDataId($(this), sepa, cc);
             // Index de couleur basé sur la position du bouton dans le DOM
             const colorIndex = $(this).attr('data-1c-sepa-id') !== undefined
                 ? $('[data-1c-sepa-id]').index(this)
