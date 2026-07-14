@@ -40,11 +40,14 @@ function Choice(
     this.old_price = this.customHtml.old_price;
     this.engagement = this.customHtml.engagement;
     this.sticker_satisfait_echange = this.customHtml.sticker_satisfait_echange;
+    this.sticker_satisfait_rembourse =
+      this.customHtml.sticker_satisfait_rembourse;
   } catch (error) {
     this.customHtml = "";
     this.old_price = null;
     this.engagement = 0;
     this.sticker_satisfait_echange = null;
+    this.sticker_satisfait_rembourse = null;
   }
 
   /**
@@ -230,15 +233,32 @@ function Choice(
   };
 
   /**
-   * Fonction qui retourne l'affichage du sticker "Satisfait ou échangé" en haut à droite du cadre (rien si pas d'info)
+   * Fonction qui retourne l'affichage du sticker "Satisfait ou échangé" / "Satisfait ou remboursé"
+   * en haut à droite du cadre (rien si pas d'info). L'échangé est prioritaire si les deux sont renseignés.
    **/
   Choice.prototype.printSticker = function () {
-    return this.sticker_satisfait_echange
+    var type = null;
+    var jours = null;
+    var libelle = "";
+    if (this.sticker_satisfait_echange) {
+      type = "echange";
+      jours = this.sticker_satisfait_echange;
+      libelle = "échangé";
+    } else if (this.sticker_satisfait_rembourse) {
+      type = "rembourse";
+      jours = this.sticker_satisfait_rembourse;
+      libelle = "remboursé";
+    }
+    return type
       ? `<img class="sticker-satisfait-echange" style="position: absolute; top: 0; right: 0; transform: translate(35%, -35%) rotate(8deg); width: 30%; max-width: 90px; height: auto; z-index: 10;"
-                      src="https://vauban-cdn.pubfac.io/uploads/sicker-satisfait-echange-` +
-          this.sticker_satisfait_echange +
-          `.png" alt="Satisfait ou échangé ` +
-          this.sticker_satisfait_echange +
+                      src="https://vauban-cdn.pubfac.io/uploads/sicker-satisfait-` +
+          type +
+          `-` +
+          jours +
+          `.png" alt="Satisfait ou ` +
+          libelle +
+          ` ` +
+          jours +
           ` jours">`
       : ``;
   };
@@ -668,7 +688,10 @@ function customizeChoices(choices) {
   // Le sticker déborde du cadre : neutralise les overflow:hidden des
   // conteneurs parents (li, .vanguard-choice-name, #items-choices) qui le rogneraient
   if (
-    choices.some((choice) => choice.sticker_satisfait_echange) &&
+    choices.some(
+      (choice) =>
+        choice.sticker_satisfait_echange || choice.sticker_satisfait_rembourse,
+    ) &&
     $("#sticker-overflow-fix").length === 0
   ) {
     $("head").append(
